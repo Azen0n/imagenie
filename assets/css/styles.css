@@ -66,7 +66,7 @@ body, html {
 }
 
 .fade {
-    transition-duration: 0ms !important;
+    transition-duration: 100ms !important;
 }
 
 code[class*=language-], pre[class*=language-] {
@@ -93,7 +93,6 @@ hr {
 }
 
 .category {
-    font-size: 0.9em;
     text-decoration: none !important;
     color: var(--blue);
     vertical-align: middle;
@@ -102,17 +101,4 @@ hr {
 
 .inline-category {
     display: inline-block;
-}
-
-.search-bar {
-    width: 33%;
-}
-
-ol li {
-    padding-left: 0.5em;
-}
-
-.footer {
-    height: 2em;
-    background-color: var(--gray);
 }
