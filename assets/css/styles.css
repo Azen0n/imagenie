@@ -23,7 +23,7 @@
 }
 
 body, html {
-  height: 100%;
+    height: 100%;
 }
 
 .plate {
@@ -66,7 +66,7 @@ body, html {
 }
 
 .fade {
-    transition-duration: 100ms !important;
+    transition-duration: 0ms !important;
 }
 
 code[class*=language-], pre[class*=language-] {
@@ -93,6 +93,7 @@ hr {
 }
 
 .category {
+    font-size: 0.9em;
     text-decoration: none !important;
     color: var(--blue);
     vertical-align: middle;
@@ -101,4 +102,79 @@ hr {
 
 .inline-category {
     display: inline-block;
+}
+
+.search-bar {
+    width: 33%;
+}
+
+ol li {
+    padding-left: 0.5em;
+}
+
+.footer {
+    height: 2em;
+    background-color: var(--gray);
+}
+
+.wrapper {
+    padding: 1em 1em;
+    display: grid;
+    grid-template-columns: 2fr 2fr 6fr;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    width: 195px;
+    height: 195px;
+}
+
+.grid-element {
+    align-self: center;
+    justify-self: center;
+    width: 33px;
+    height: 33px;
+}
+
+.selected-grid-element {
+    align-self: center;
+    justify-self: center;
+    width: 37px;
+    height: 37px;
+    animation: scaleElement 0.4s forwards;
+}
+
+@keyframes scaleElement {
+    0% {
+        transform: scale(1.0);
+        border: 2px solid red;
+        border-radius: 0.3em;
+    }
+    100% {
+        transform: scale(1.5);
+        border: 2px solid red;
+        border-radius: 0.3em;
+    }
+}
+
+.btn-arrows {
+    margin-left: 1em;
+    margin-bottom: 1em;
+    padding-left: 0.2em;
+}
+
+.pixel-info {
+    margin-left: 1em;
+}
+
+.large-element {
+    margin: 0.1em;
+}
+
+.color-code {
+    margin-top: 1em;
+    margin-left: 0.2em;
+    font-size: 1.1em;
 }

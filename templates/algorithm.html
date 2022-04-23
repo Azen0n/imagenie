@@ -38,6 +38,30 @@
     </div>
     <div class="row bg-gray">
         <div class="col-2"></div>
+        <div class="col-2"></div>
+        <div class="col-5">
+            <div class="plate">
+                <div class="title">Визуализация</div>
+            </div>
+            <div class="plate">
+                <div class="wrapper">
+                    <div class="grid-container" id="grid-container"></div>
+                    <div class="pixel-info">
+                        <div class="large-element" id="large-element"></div>
+                        <div class="color-code" id="color-code"></div>
+                    </div>
+                </div>
+                <div class="btn-arrows">
+                    <button class="btn bg-blue text-white" id="back">🡠</button>
+                    <button class="btn bg-blue text-white" id="forward">🡢</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-2"></div>
+        <div class="col-1"></div>
+    </div>
+    <div class="row bg-gray">
+        <div class="col-2"></div>
         <div class="col-2">
             <div class="plate">
                 <p class="list-title">Языки программирования</p>
@@ -105,11 +129,13 @@ int main() {
                     <div class="row my-3">
                         <div class="col-6 text-start">
                             <p class="description-label">Оригинал</p>
-                            <img class="img-fluid" src="https://i.imgur.com/tC9Hjsd.png" alt="Lenna (original)">
+                            <img class="img-fluid" src="{% static '../static/img/original.png' %}"
+                                 alt="Lenna (original)"
+                                 id="img-original">
                         </div>
                         <div class="col-6 text-start">
                             <p class="description-label">После преобразования</p>
-                            <img class="img-fluid" src="https://i.imgur.com/YHg3B1t.png" alt="Lenna (processed)">
+                            <img class="img-fluid" src="{% static '../static/img/binarization.png' %}" alt="Lenna (processed)">
                         </div>
                     </div>
                 </div>
@@ -128,8 +154,12 @@ int main() {
             <div class="plate">
                 <div class="description">
                     <ol>
-                        <li>Shapiro, Linda G. & Stockman, George C. (2002). "Computer Vision". Prentice Hall. ISBN 0-13-030796-3</li>
-                        <li>Pham N, Morrison A, Schwock J et al. (2007). Quantitative image analysis of immunohistochemical stains using a CMYK color model. Diagn Pathol. 2:8</li>
+                        <li>Shapiro, Linda G. & Stockman, George C. (2002). "Computer Vision". Prentice Hall. ISBN
+                            0-13-030796-3
+                        </li>
+                        <li>Pham N, Morrison A, Schwock J et al. (2007). Quantitative image analysis of
+                            immunohistochemical stains using a CMYK color model. Diagn Pathol. 2:8
+                        </li>
                     </ol>
                 </div>
             </div>
@@ -141,6 +171,7 @@ int main() {
     {% include 'footer.html' %}
 </div>
 
+<script src="{% static '../static/js/binarization-visualization.js' %}"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <script src="{% static '../static/js/prism.js' %}"></script>
 <script src="{% static '../static/bootstrap/js/bootstrap.min.js' %}"></script>
