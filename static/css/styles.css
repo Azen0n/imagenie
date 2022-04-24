@@ -1,6 +1,7 @@
 :root {
-    --blue: #6495ED;
-    --gray: #F8F8F8;
+    --blue: #6495ed;
+    --gray: #f8f8f8;
+    --light-blue: #b8d4fc;
 }
 
 .bg-blue {
@@ -44,6 +45,13 @@ body, html {
 .description {
     padding: 1em;
     font-size: 1.1em;
+}
+
+.description-source {
+    text-decoration: none !important;
+    font-size: 0.9em;
+    color: var(--blue);
+    margin-right: 0.4em;
 }
 
 .list-title {
@@ -177,4 +185,59 @@ ol li {
     margin-top: 1em;
     margin-left: 0.2em;
     font-size: 1.1em;
+}
+
+::selection {
+    background: var(--light-blue);
+}
+
+.math-left-align .mjx-chtml.MJXc-display {
+    text-align: left !important;
+}
+
+.formula {
+    margin: 0.1em;
+}
+
+.bright {
+    border-radius: 0.2em;
+    box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.25);
+}
+
+@font-face {
+    font-family: 'MathJax';
+    src: url('/static/fonts/MathJax_Main-Regular.otf') format('opentype');
+}
+
+.mathjax-font {
+    font-family: MathJax, sans-serif;
+    font-size: 1.2em;
+}
+
+.instructions {
+    padding: 1em 1em;
+    display: grid;
+    grid-template-columns: 1.7em auto;
+}
+
+.number {
+    background-color: var(--blue);
+    border-radius: 5em;
+    color: white;
+    width: 1.7em;
+    height: 1.7em;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 1.7em;
+}
+
+.instruction {
+    margin-left: 0.5em;
+    display: flex;
+    align-items: center;
+}
+
+.instruction-formula {
+    margin-left: 0.5em;
+    margin-bottom: 0.5em;
 }
