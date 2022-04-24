@@ -1,0 +1,202 @@
+{% load static %}
+<!doctype html>
+
+<html lang="en">
+{% block title %}{% endblock %}
+
+<body>
+{% include 'navbar.html' %}
+
+<div class="container-fluid h-100">
+    <div class="row bg-gray">
+        <div class="col-2"></div>
+        <div class="col-2">
+            <div class="plate">
+                <p class="list-title">Популярное</p>
+                <hr>
+                <a class="list-entry" href="/">Бинаризация</a>
+                <a class="list-entry" href="/">Фильтр Гаусса</a>
+            </div>
+        </div>
+        <div class="col-5">
+            <div class="plate">
+                <div class="inline-category title">Бинаризация</div>
+                <div class="inline-category"><p><a class="category" href="/">Простейшие алгоритмы</a>
+                    <a class="category">&gt;</a> <a class="category" href="/">Бинаризация</a></p>
+                </div>
+            </div>
+            <div class="plate">
+                <div class="description"><p>Процесс бинаризации — это перевод цветного (или в градациях серого)
+                    изображения в двухцветное черно-белое. Главным параметром такого преобразования является порог \(T\)
+                    — значение, с которым сравнивается яркость каждого пикселя. По результатам сравнения, пикселю
+                    присваивается значение \(0\) или \(1\).</p>
+                    <p>$$\begin{cases}1,\text{if }\text{brightness}\ge T\\ 0\text{ otherwise}\end{cases}$$</p>
+                    <p>$$\text{brightness}=0.299\cdot\text{Red}+0.587\cdot\text{Green}+0.114\cdot\text{Blue}$$</p>
+                    <p>Существуют различные методы бинаризации, которые можно
+                        условно разделить на две группы — глобальные и локальные. В первом случае величина порога
+                        остается
+                        неизменной в течение всего процесса бинаризации. Во втором изображение разбивается на области, в
+                        каждой из которых вычисляется локальный порог.</p>
+                    Главная цель бинаризации — это радикальное уменьшение количества информации, с которой приходится
+                    работать. Просто говоря, удачная бинаризация сильно упрощает последующую работу с изображением. С
+                    другой стороны, неудачи в процессе бинаризации могут привети к искажениям, таким, как разрывы в
+                    линиях, потеря значащих деталей, нарушение целостности объектов, появление шума и непредсказуемое
+                    искажение символов из-за неоднородностей фона. Различные методы бинаризации имеют свои слабые места:
+                    так, например, метод Оцу может приводить к утрате мелких деталей и «слипанию» близлежащих символов,
+                    а метод Ниблэка грешит появлением ложных объектов в случае неоднородностей фона с низкой
+                    контрастностью. Отсюда следует, что каждый метод должен быть применен в своей области.
+                    <div class="text-end">
+                        <a class="description-source" href="https://habr.com/ru/post/278435/">Источник</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-2"></div>
+        <div class="col-1"></div>
+    </div>
+    <div class="row bg-gray">
+        <div class="col-2"></div>
+        <div class="col-2"></div>
+        <div class="col-5">
+            <div class="plate">
+                <div class="title">Визуализация</div>
+            </div>
+            <div class="plate">
+                <div class="wrapper">
+                    <div class="grid-container" id="grid-container"></div>
+                    <div class="pixel-info">
+                        <div class="large-element" id="large-element"></div>
+                        <div class="color-code" id="color-code"></div>
+                    </div>
+                    <div class="grid-container" id="new-grid-container"></div>
+                </div>
+                <div class="btn-arrows">
+                    <button class="btn bg-blue text-white" id="back">🡠</button>
+                    <button class="btn bg-blue text-white" id="forward">🡢</button>
+                </div>
+                <div id="instructions" class="instructions"></div>
+            </div>
+        </div>
+        <div class="col-2"></div>
+        <div class="col-1"></div>
+    </div>
+    <div class="row bg-gray">
+        <div class="col-2"></div>
+        <div class="col-2">
+            <div class="plate">
+                <p class="list-title">Языки программирования</p>
+                <hr>
+                <div class="nav flex-column nav-pills" role="tablist" aria-orientation="vertical">
+                    <button class="nav-link active" data-bs-target="#python" type="button" role="tab"
+                            data-bs-toggle="pill">
+                        Python
+                    </button>
+                    <button class="nav-link mb-3" data-bs-target="#cpp" type="button" role="tab" data-bs-toggle="pill">
+                        C++
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="col-5">
+            <div class="plate">
+                <div class="title">Реализация</div>
+            </div>
+            <div class="tab-content">
+                <div class="tab-pane fade show active" id="python" role="tabpanel">
+                    <div class="plate">
+                        <pre><code class="language-python">print('Hello, world!')</code></pre>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="cpp" role="tabpanel">
+                    <div class="plate"><pre><code class="language-python">#include &lt;iostream&gt;
+
+int main() {
+    std::cout << "Hello World!";
+    return 0;
+}</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-2"></div>
+        <div class="col-1"></div>
+    </div>
+    <div class="row bg-gray">
+        <div class="col-2"></div>
+        <div class="col-2">
+            <div class="plate">
+                <p class="list-title">Настройки</p>
+                <hr>
+                <div class="mx-3">
+                    <div class="mb-1">Загрузить изображение</div>
+                    <input class="form-control text-start text-white w-100" type="file">
+                </div>
+                <div class="mx-3 mt-2">
+                    <div class="mb-1">Пороговое значение</div>
+                    <input class="form-control w-100" placeholder="Введите значение">
+                </div>
+                <div class="mx-3 mt-4 mb-3">
+                    <button class="btn bg-blue text-start text-white w-100">Преобразовать</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-5">
+            <div class="plate">
+                <div class="title">Преобразование изображения</div>
+            </div>
+            <div class="plate">
+                <div class="container-fluid">
+                    <div class="row my-3">
+                        <div class="col-6 text-start">
+                            <p class="description-label">Оригинал</p>
+                            <img class="img-fluid" src="{% static '../static/img/original.png' %}"
+                                 alt="Lenna (original)"
+                                 id="img-original">
+                        </div>
+                        <div class="col-6 text-start">
+                            <p class="description-label">После преобразования</p>
+                            <img class="img-fluid" src="{% static '../static/img/binarization.png' %}"
+                                 alt="Lenna (processed)">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-2"></div>
+        <div class="col-1"></div>
+    </div>
+    <div class="row bg-gray">
+        <div class="col-2"></div>
+        <div class="col-2"></div>
+        <div class="col-5">
+            <div class="plate">
+                <div class="title">Литература</div>
+            </div>
+            <div class="plate">
+                <div class="description">
+                    <ol>
+                        <li>Shapiro, Linda G. & Stockman, George C. (2002). "Computer Vision". Prentice Hall. ISBN
+                            0-13-030796-3
+                        </li>
+                        <li>Pham N, Morrison A, Schwock J et al. (2007). Quantitative image analysis of
+                            immunohistochemical stains using a CMYK color model. Diagn Pathol. 2:8
+                        </li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+        <div class="col-2"></div>
+        <div class="col-1"></div>
+    </div>
+
+    {% include 'footer.html' %}
+</div>
+
+<script src="{% static '../static/js/binarization-visualization.js' %}"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script src="{% static '../static/js/prism.js' %}"></script>
+<script src="{% static '../static/bootstrap/js/bootstrap.min.js' %}"></script>
+<script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js'></script>
+</body>
+
+</html>
