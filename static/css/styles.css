@@ -144,6 +144,7 @@ ol li {
     justify-self: center;
     width: 33px;
     height: 33px;
+    border-radius: 0.2em;
 }
 
 .selected-grid-element {
@@ -220,7 +221,7 @@ ol li {
     grid-template-columns: 1.7em auto;
 }
 
-.number {
+.instruction-number {
     background-color: var(--blue);
     border-radius: 5em;
     color: white;
@@ -240,4 +241,14 @@ ol li {
 .instruction-formula {
     margin-left: 0.5em;
     margin-bottom: 0.5em;
+}
+
+.image-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+}
+
+.image-element {
+    max-height: 20em;
 }
