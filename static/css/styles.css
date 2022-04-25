@@ -242,3 +242,13 @@ ol li {
     margin-left: 0.5em;
     margin-bottom: 0.5em;
 }
+
+.image-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+}
+
+.image-element {
+    max-height: 20em;
+}
