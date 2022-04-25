@@ -34,10 +34,9 @@ image.onload = () => {
             for (let j = 0; j < size; ++j) {
                 let element = document.createElement('div');
                 element.className = "grid-element";
-                element.style.backgroundColor = 'rgb(' + colors[i][j][0] + ', ' + colors[i][j][1] + ', ' + colors[i][j][2] + ')';
-                //let draw = SVG().width(33).height(33).addTo(element);
+                let draw = SVG().width(33).height(33).addTo(element);
                 container.appendChild(element);
-                //draw.path(normalPixelPath).fill('rgb(' + colors[i][j][0] + ', ' + colors[i][j][1] + ', ' + colors[i][j][2] + ')');
+                draw.path(normalPixelPath).fill('rgb(' + colors[i][j][0] + ', ' + colors[i][j][1] + ', ' + colors[i][j][2] + ')');
                 pixels[i].push(element);
             }
         }
@@ -150,7 +149,7 @@ function calcBrightness(color) {
     let instructions = document.getElementById('instructions');
     instructions.innerHTML = '';
     let number = document.createElement('div');
-    number.className = 'instruction-number';
+    number.className = 'number';
     number.innerHTML = '1';
     let instruction = document.createElement('div');
     instruction.className = 'instruction';
@@ -164,7 +163,7 @@ function calcBrightness(color) {
     instructions.append(document.createElement('div'), instructionText);
 
     number = document.createElement('div');
-    number.className = 'instruction-number';
+    number.className = 'number';
     number.innerHTML = '2';
     instruction = document.createElement('div');
     instruction.className = 'instruction';
