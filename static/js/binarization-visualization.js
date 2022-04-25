@@ -150,7 +150,7 @@ function calcBrightness(color) {
     let instructions = document.getElementById('instructions');
     instructions.innerHTML = '';
     let number = document.createElement('div');
-    number.className = 'number';
+    number.className = 'instruction-number';
     number.innerHTML = '1';
     let instruction = document.createElement('div');
     instruction.className = 'instruction';
@@ -164,7 +164,7 @@ function calcBrightness(color) {
     instructions.append(document.createElement('div'), instructionText);
 
     number = document.createElement('div');
-    number.className = 'number';
+    number.className = 'instruction-number';
     number.innerHTML = '2';
     instruction = document.createElement('div');
     instruction.className = 'instruction';

@@ -221,7 +221,7 @@ ol li {
     grid-template-columns: 1.7em auto;
 }
 
-.number {
+.instruction-number {
     background-color: var(--blue);
     border-radius: 5em;
     color: white;
