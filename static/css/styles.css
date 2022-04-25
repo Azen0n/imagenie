@@ -144,6 +144,7 @@ ol li {
     justify-self: center;
     width: 33px;
     height: 33px;
+    border-radius: 0.2em;
 }
 
 .selected-grid-element {

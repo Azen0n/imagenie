@@ -34,9 +34,10 @@ image.onload = () => {
             for (let j = 0; j < size; ++j) {
                 let element = document.createElement('div');
                 element.className = "grid-element";
-                let draw = SVG().width(33).height(33).addTo(element);
+                element.style.backgroundColor = 'rgb(' + colors[i][j][0] + ', ' + colors[i][j][1] + ', ' + colors[i][j][2] + ')';
+                //let draw = SVG().width(33).height(33).addTo(element);
                 container.appendChild(element);
-                draw.path(normalPixelPath).fill('rgb(' + colors[i][j][0] + ', ' + colors[i][j][1] + ', ' + colors[i][j][2] + ')');
+                //draw.path(normalPixelPath).fill('rgb(' + colors[i][j][0] + ', ' + colors[i][j][1] + ', ' + colors[i][j][2] + ')');
                 pixels[i].push(element);
             }
         }
