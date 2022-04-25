@@ -1,5 +1,6 @@
 import base64
 import io
+import json
 from urllib.parse import quote
 
 import cv2
@@ -15,12 +16,13 @@ def image_to_string(image) -> str:
 
 
 def params_to_list(params: str) -> list:
-    """Converts csv params to list.
+    """Converts stringified list of params to list.
 
     Supported types: int, float, str.
     Example:
-    '1.5,2,keyword' => [1.5, 2, 'keyword']
+    '["1.5", "2", "keyword"]' => [1.5, 2, 'keyword']
     """
+    params = json.loads(params)
     param_list = []
     for param in params:
         try:

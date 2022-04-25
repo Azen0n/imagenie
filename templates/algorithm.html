@@ -166,14 +166,16 @@ private Bitmap binarization(Bitmap image, int threshold)
                 <hr>
                 <div class="mx-3">
                     <div class="mb-1">Загрузить изображение</div>
-                    <input class="form-control text-start text-white w-100" type="file">
+                    <input class="form-control text-start w-100" type="file" id="image-file">
                 </div>
                 <div class="mx-3 mt-2">
                     <div class="mb-1">Пороговое значение</div>
-                    <input class="form-control w-100" placeholder="Введите значение">
+                    <input class="form-control w-100" placeholder="Введите значение" id="param1">
                 </div>
                 <div class="mx-3 mt-4 mb-3">
-                    <button class="btn bg-blue text-start text-white w-100">Преобразовать</button>
+                    <button class="btn bg-blue text-start text-white w-100" id="process-btn" name="binarization">
+                        Преобразовать
+                    </button>
                 </div>
             </div>
         </div>
@@ -182,19 +184,17 @@ private Bitmap binarization(Bitmap image, int threshold)
                 <div class="title">Преобразование изображения</div>
             </div>
             <div class="plate">
-                <div class="container-fluid">
-                    <div class="row my-3">
-                        <div class="col-6 text-start">
-                            <p class="description-label">Оригинал</p>
-                            <img class="img-fluid" src="{% static '../static/img/original.png' %}"
-                                 alt="Lenna (original)"
-                                 id="img-original">
-                        </div>
-                        <div class="col-6 text-start">
-                            <p class="description-label">После преобразования</p>
-                            <img class="img-fluid" src="{% static '../static/img/binarization.png' %}"
-                                 alt="Lenna (processed)">
-                        </div>
+                <div class="image-container p-2">
+                    <div class="m-2">
+                        <p class="description-label">Оригинал</p>
+                        <img class="image-element img-fluid" src="{% static '../static/img/original.png' %}" alt="Image (original)"
+                             id="img-original">
+                    </div>
+                    <div class="m-2">
+                        <p class="description-label">После преобразования</p>
+                        <img class="image-element img-fluid" src="{% static '../static/img/binarization.png' %}"
+                             alt="Image (processed)"
+                             id="img-processed">
                     </div>
                 </div>
             </div>
@@ -229,7 +229,9 @@ private Bitmap binarization(Bitmap image, int threshold)
     {% include 'footer.html' %}
 </div>
 
+<script type="text/javascript">window.CSRF_TOKEN = "{{ csrf_token }}";</script>
 <script src="{% static '../static/js/binarization-visualization.js' %}"></script>
+<script src="{% static '../static/js/ajax-process-image.js' %}"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <script src="{% static '../static/js/prism.js' %}"></script>
 <script src="{% static '../static/bootstrap/js/bootstrap.min.js' %}"></script>
