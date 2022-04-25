@@ -1,5 +1,3 @@
 .idea
 venv
-myenv
 imagenie/secret_key.py
-**/__pycache__/**
