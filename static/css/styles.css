@@ -2,6 +2,9 @@
     --blue: #6495ed;
     --gray: #f8f8f8;
     --light-blue: #b8d4fc;
+    --dark-red: #c30000;
+    --dark-green: #07c300;
+    --dark-blue: #000ec3;
 }
 
 .bg-blue {
@@ -10,6 +13,18 @@
 
 .bg-gray {
     background-color: var(--gray);
+}
+
+.color-red {
+    color: var(--dark-red);
+}
+
+.color-green {
+    color: var(--dark-green);
+}
+
+.color-blue {
+    color: var(--dark-blue);
 }
 
 .logo {

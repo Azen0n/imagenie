@@ -19,8 +19,8 @@ let largePixel;
 
 let backBtn = document.getElementById('back');
 let forwardBtn = document.getElementById('forward');
-let i = 0;
-let j = 0;
+let currentRow = 0;
+let currentColumn = 0;
 
 image.onload = () => {
     ctx.drawImage(image, 0, 0);
@@ -35,8 +35,8 @@ image.onload = () => {
     pixels = createPixels(size);
     newPixels = createNewPixels(size);
     largePixel = drawLargePixel();
-    selectPixel(i, j);
-    calcBrightness(colors[i][j]);
+    selectPixel(currentRow, currentColumn);
+    calcBrightness(colors[currentRow][currentColumn]);
     backBtn.disabled = true;
 }
 
@@ -49,6 +49,13 @@ function createPixels(size) {
             element.className = "grid-element";
             element.style.backgroundColor = 'rgb(' + colors[i][j][0] + ', ' + colors[i][j][1] + ', ' + colors[i][j][2] + ')';
             container.appendChild(element);
+            element.addEventListener('click', function () {
+                turnDownPixel(currentRow, currentColumn);
+                [currentRow, currentColumn] = [i, j];
+                selectPixel(currentRow, currentColumn);
+                calcBrightness(colors[currentRow][currentColumn]);
+                backBtn.disabled = currentRow === 0 && currentColumn === 0;
+            });
             pixels[i].push(element);
         }
     }
@@ -92,7 +99,10 @@ function drawLargePixel() {
 function changeLargePixelColor(color) {
     largePixel.fill('rgb(' + color[0] + ', ' + color[1] + ', ' + color[2] + ')');
     let colorCode = document.getElementById('color-code');
-    colorCode.innerHTML = '<b>R</b> ' + color[0] + '<br><b>G</b> ' + color[1] + '<br><b>B</b> ' + color[2];
+    colorCode.innerHTML =
+        '<div class="color-red"><b>R</b> ' + color[0] + '</div>' +
+        '<div class="color-green"><b>G</b> ' + color[1] + '</div>' +
+        '<div class="color-blue"><b>B</b> ' + color[2] + '</div>';
 }
 
 function nextIndex(i, j) {
@@ -128,19 +138,19 @@ function prevIndex(i, j) {
 }
 
 forwardBtn.addEventListener('click', () => {
-    turnDownPixel(i, j);
-    [i, j] = nextIndex(i, j);
-    selectPixel(i, j);
-    calcBrightness(colors[i][j]);
-    backBtn.disabled = i === 0 && j === 0;
+    turnDownPixel(currentRow, currentColumn);
+    [currentRow, currentColumn] = nextIndex(currentRow, currentColumn);
+    selectPixel(currentRow, currentColumn);
+    calcBrightness(colors[currentRow][currentColumn]);
+    backBtn.disabled = currentRow === 0 && currentColumn === 0;
 });
 
 backBtn.addEventListener('click', () => {
-    turnDownPixel(i, j);
-    [i, j] = prevIndex(i, j);
-    selectPixel(i, j);
-    calcBrightness(colors[i][j]);
-    backBtn.disabled = i === 0 && j === 0;
+    turnDownPixel(currentRow, currentColumn);
+    [currentRow, currentColumn] = prevIndex(currentRow, currentColumn);
+    selectPixel(currentRow, currentColumn);
+    calcBrightness(colors[currentRow][currentColumn]);
+    backBtn.disabled = currentRow === 0 && currentColumn === 0;
 });
 
 function calcBrightness(color) {
@@ -156,8 +166,10 @@ function calcBrightness(color) {
     let brightness = Math.round(0.299 * color[0] + 0.587 * color[1] + 0.114 * color[2]);
     let instructionText = document.createElement('div');
     instructionText.classList.add('mathjax-font', 'instruction-formula');
-    instructionText.innerHTML = 'brightness = 0.299 ⋅ ' + color[0] + ' + 0.587 ⋅ ' + color[1] + ' + 0.114 ⋅ ' + color[2]
-        + ' = ' + brightness;
+    instructionText.innerHTML = 'brightness = ' +
+        '0.299 ⋅ <span class="color-red">' + color[0] + '</span> + ' +
+        '0.587 ⋅ <span class="color-green">' + color[1] + '</span> + ' +
+        '0.114 ⋅ <span class="color-blue">' + color[2] + '</span> = ' + brightness;
     instructions.append(document.createElement('div'), instructionText);
 
     number = document.createElement('div');
@@ -183,7 +195,7 @@ function calcBrightness(color) {
 
 function changeNewPixelColor(color) {
     if (color[0] + color[1] + color[2] === 255 * 3) {
-        newPixels[i][j].classList.add('bright');
+        newPixels[currentRow][currentColumn].classList.add('bright');
     }
-    newPixels[i][j].style.backgroundColor = 'rgb(' + color[0] + ', ' + color[1] + ', ' + color[2] + ')';
+    newPixels[currentRow][currentColumn].style.backgroundColor = 'rgb(' + color[0] + ', ' + color[1] + ', ' + color[2] + ')';
 }
