@@ -94,9 +94,8 @@
                             data-bs-toggle="pill">
                         Python
                     </button>
-                    <button class="nav-link mb-3" data-bs-target="#csharp" type="button" role="tab"
-                            data-bs-toggle="pill">
-                        C#
+                    <button class="nav-link mb-3" data-bs-target="#cpp" type="button" role="tab" data-bs-toggle="pill">
+                        C++
                     </button>
                 </div>
             </div>
@@ -108,52 +107,16 @@
             <div class="tab-content">
                 <div class="tab-pane fade show active" id="python" role="tabpanel">
                     <div class="plate">
-                        <div class="mx-3"><pre><code class="language-python">from PIL import Image, ImageDraw
-
-
-def binarization(image_path: str, threshold: int) -> Image:
-    image = Image.open(image_path)
-    image = image.convert('L')
-    pix = image.load()
-    new_image = Image.new(size=image.size, mode='L')
-    draw = ImageDraw.Draw(new_image)
-    for y in range(image.width):
-        for x in range(image.height):
-            if (pix[x, y] >= threshold):
-                draw.point((x, y), 255)
-            else:
-                draw.point((x, y), 0)
-    return new_image</code></pre>
-                        </div>
+                        <pre><code class="language-python">print('Hello, world!')</code></pre>
                     </div>
                 </div>
-                <div class="tab-pane fade" id="csharp" role="tabpanel">
-                    <div class="plate">
-                        <div class="mx-3"><pre><code class="language-csharp">using System;
-using System.Drawing;
+                <div class="tab-pane fade" id="cpp" role="tabpanel">
+                    <div class="plate"><pre><code class="language-python">#include &lt;iostream&gt;
 
-private Bitmap binarization(Bitmap image, int threshold)
-{
-    Bitmap newImage = new Bitmap(image.Width, image.Height);
-    for (int y = 0; y < image.Height; y++)
-    {
-        for (int x = 0; x < image.Width; x++)
-        {
-            var pixel = image.GetPixel(x, y);
-            double brightness = 0.299 * pixel.R + 0.587 * pixel.G + 0.114 * pixel.B;
-            if (brightness > threshold)
-            {
-                newImage.SetPixel(x, y, Color.White);
-            }
-            else
-                {
-                    newImage.SetPixel(x, y, Color.Black);
-                }
-        }
-    }
-    return newImage;
+int main() {
+    std::cout << "Hello World!";
+    return 0;
 }</code></pre>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -169,16 +132,14 @@ private Bitmap binarization(Bitmap image, int threshold)
                 <hr>
                 <div class="mx-3">
                     <div class="mb-1">Загрузить изображение</div>
-                    <input class="form-control text-start w-100" type="file" id="image-file">
+                    <input class="form-control text-start text-white w-100" type="file">
                 </div>
                 <div class="mx-3 mt-2">
                     <div class="mb-1">Пороговое значение</div>
-                    <input class="form-control w-100" placeholder="Введите значение" id="param1">
+                    <input class="form-control w-100" placeholder="Введите значение">
                 </div>
                 <div class="mx-3 mt-4 mb-3">
-                    <button class="btn bg-blue text-start text-white w-100" id="process-btn" name="binarization">
-                        Преобразовать
-                    </button>
+                    <button class="btn bg-blue text-start text-white w-100">Преобразовать</button>
                 </div>
             </div>
         </div>
@@ -228,9 +189,7 @@ private Bitmap binarization(Bitmap image, int threshold)
     {% include 'footer.html' %}
 </div>
 
-<script type="text/javascript">window.CSRF_TOKEN = "{{ csrf_token }}";</script>
 <script src="{% static '../static/js/binarization-visualization.js' %}"></script>
-<script src="{% static '../static/js/ajax-process-image.js' %}"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <script src="{% static '../static/js/prism.js' %}"></script>
 <script src="{% static '../static/bootstrap/js/bootstrap.min.js' %}"></script>

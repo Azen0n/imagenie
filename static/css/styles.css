@@ -176,7 +176,6 @@ hr {
     justify-self: center;
     width: 33px;
     height: 33px;
-    border-radius: 0.2em;
 }
 
 .selected-grid-element {
@@ -253,7 +252,7 @@ hr {
     grid-template-columns: 1.7em auto;
 }
 
-.instruction-number {
+.number {
     background-color: var(--blue);
     border-radius: 5em;
     color: white;
