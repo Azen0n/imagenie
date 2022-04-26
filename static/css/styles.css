@@ -2,6 +2,9 @@
     --blue: #6495ed;
     --gray: #f8f8f8;
     --light-blue: #b8d4fc;
+    --dark-red: #c30000;
+    --dark-green: #07c300;
+    --dark-blue: #000ec3;
 }
 
 .bg-blue {
@@ -10,6 +13,18 @@
 
 .bg-gray {
     background-color: var(--gray);
+}
+
+.color-red {
+    color: var(--dark-red);
+}
+
+.color-green {
+    color: var(--dark-green);
+}
+
+.color-blue {
+    color: var(--dark-blue);
 }
 
 .logo {
@@ -63,14 +78,23 @@ body, html {
 .list-entry {
     text-decoration: none !important;
     color: black;
-    display: inline-block;
+    display: block;
     margin-bottom: 0.5em;
-    padding: 0 1em;
+    padding: 0.2em 1em;
     font-size: 1.1em;
 
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+a:hover {
+    color: var(--blue);
+}
+
+a:active {
+    color: var(--blue);
+    opacity: 0.5;
 }
 
 .fade {
@@ -79,6 +103,18 @@ body, html {
 
 code[class*=language-], pre[class*=language-] {
     background: white !important;
+}
+
+.nav-link {
+    color: black;
+}
+
+.nav-link:active {
+    color: var(--blue);
+}
+
+.nav-link:hover {
+    color: var(--blue);
 }
 
 .active {
@@ -114,10 +150,6 @@ hr {
 
 .search-bar {
     width: 33%;
-}
-
-ol li {
-    padding-left: 0.5em;
 }
 
 .footer {
@@ -201,7 +233,7 @@ ol li {
 
 .bright {
     border-radius: 0.2em;
-    box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.25);
+    border: 1px solid lightgray;
 }
 
 @font-face {
@@ -240,4 +272,25 @@ ol li {
 .instruction-formula {
     margin-left: 0.5em;
     margin-bottom: 0.5em;
+}
+
+.image-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+}
+
+.image-element {
+    max-height: 20em;
+}
+
+.sources {
+    padding: 1em;
+    font-size: 1.1em;
+    display: grid;
+    grid-template-columns: 1.7em auto 1.7em;
+}
+
+.source-text {
+    padding: 0 0.5em;
 }

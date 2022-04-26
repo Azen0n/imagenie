@@ -2,6 +2,9 @@
     --blue: #6495ed;
     --gray: #f8f8f8;
     --light-blue: #b8d4fc;
+    --dark-red: #c30000;
+    --dark-green: #07c300;
+    --dark-blue: #000ec3;
 }
 
 .bg-blue {
@@ -10,6 +13,18 @@
 
 .bg-gray {
     background-color: var(--gray);
+}
+
+.color-red {
+    color: var(--dark-red);
+}
+
+.color-green {
+    color: var(--dark-green);
+}
+
+.color-blue {
+    color: var(--dark-blue);
 }
 
 .logo {
@@ -144,6 +159,7 @@ ol li {
     justify-self: center;
     width: 33px;
     height: 33px;
+    border-radius: 0.2em;
 }
 
 .selected-grid-element {
@@ -201,7 +217,7 @@ ol li {
 
 .bright {
     border-radius: 0.2em;
-    box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.25);
+    border: 1px solid lightgray;
 }
 
 @font-face {
@@ -220,7 +236,7 @@ ol li {
     grid-template-columns: 1.7em auto;
 }
 
-.number {
+.instruction-number {
     background-color: var(--blue);
     border-radius: 5em;
     color: white;
@@ -240,4 +256,14 @@ ol li {
 .instruction-formula {
     margin-left: 0.5em;
     margin-bottom: 0.5em;
+}
+
+.image-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+}
+
+.image-element {
+    max-height: 20em;
 }
