@@ -126,26 +126,6 @@ backBtn.addEventListener('click', () => {
     calcBrightness(colors[i][j]);
 });
 
-function calcBrightness2(color) {
-    let formula = document.getElementById('formula');
-    let brightnessValue = Math.round(0.299 * color[0] + 0.587 * color[1] + 0.114 * color[2]);
-    let brightness = '\\(\\text{brightness}=0.299\\cdot ' + color[0]
-        + '+0.587\\cdot ' + color[1] + '+0.114\\cdot ' + color[2] + '\\\\=' + brightnessValue + '\\)';
-    let threshold = '\\(T=128\\)';
-    let equation;
-    if (brightnessValue >= 128) {
-        equation = '\\begin{cases}\\color{Red}{255,\\text{if }' + brightnessValue + '\\ge 128}\\\\0\\text{ otherwise}\\end{cases}';
-        if (isTimeToUpdate())
-            appendProcessedPixel([255, 255, 255]);
-    } else {
-        equation = '\\begin{cases}255,\\text{if }' + brightnessValue + '\\ge 128\\\\\\color{Red}{0\\text{ otherwise}}\\end{cases}';
-        if (isTimeToUpdate())
-            appendProcessedPixel([0, 0, 0]);
-    }
-    formula.innerHTML = brightness + threshold + equation;
-    MathJax.Hub.Queue(['Typeset', MathJax.Hub, formula]);
-}
-
 function calcBrightness(color) {
     let instructions = document.getElementById('instructions');
     instructions.innerHTML = '';
@@ -180,7 +160,7 @@ function calcBrightness(color) {
             appendProcessedPixel([255, 255, 255]);
         }
     } else {
-        instructionText.innerHTML += brightness + ' ≤ 128 → 0';
+        instructionText.innerHTML += brightness + ' < 128 → 0';
         if (isTimeToUpdate()) {
             appendProcessedPixel([0, 0, 0]);
         }

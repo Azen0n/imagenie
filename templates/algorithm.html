@@ -116,7 +116,7 @@ def binarization(image_path: str, threshold: int) -> Image:
     draw = ImageDraw.Draw(new_image)
     for y in range(image.width):
         for x in range(image.height):
-            if pix[x, y] >= threshold:
+            if (pix[x, y] >= threshold):
                 draw.point((x, y), 255)
             else:
                 draw.point((x, y), 0)
@@ -138,7 +138,7 @@ private Bitmap binarization(Bitmap image, int threshold)
         {
             var pixel = image.GetPixel(x, y);
             double brightness = 0.299 * pixel.R + 0.587 * pixel.G + 0.114 * pixel.B;
-            if (brightness >= threshold)
+            if (brightness > threshold)
             {
                 newImage.SetPixel(x, y, Color.White);
             }
