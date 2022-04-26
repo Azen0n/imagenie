@@ -12,15 +12,18 @@
         <div class="col-2"></div>
         <div class="col-2">
             <div class="plate">
-                <p class="list-title">Популярное</p>
+                <p class="list-title">Содержание</p>
                 <hr>
-                <a class="list-entry" href="/">Бинаризация</a>
-                <a class="list-entry" href="/">Фильтр Гаусса</a>
+                <a class="list-entry" href="#theory">Теория</a>
+                <a class="list-entry" href="#visualization">Визуализация</a>
+                <a class="list-entry" href="#implementation">Реализация</a>
+                <a class="list-entry" href="#processing">Преобразование</a>
+                <a class="list-entry" href="#further-reading">Литература</a>
             </div>
         </div>
         <div class="col-5">
             <div class="plate">
-                <div class="inline-category title">Бинаризация</div>
+                <div class="inline-category title" id="theory">Бинаризация</div>
                 <div class="inline-category"><p><a class="category" href="/">Простейшие алгоритмы</a>
                     <a class="category">&gt;</a> <a class="category" href="/">Бинаризация</a></p>
                 </div>
@@ -59,7 +62,7 @@
         <div class="col-2"></div>
         <div class="col-5">
             <div class="plate">
-                <div class="title">Визуализация</div>
+                <div class="title" id="visualization">Визуализация</div>
             </div>
             <div class="plate">
                 <div class="wrapper">
@@ -100,7 +103,7 @@
         </div>
         <div class="col-5">
             <div class="plate">
-                <div class="title">Реализация</div>
+                <div class="title" id="implementation">Реализация</div>
             </div>
             <div class="tab-content">
                 <div class="tab-pane fade show active" id="python" role="tabpanel">
@@ -181,7 +184,7 @@ private Bitmap binarization(Bitmap image, int threshold)
         </div>
         <div class="col-5">
             <div class="plate">
-                <div class="title">Преобразование изображения</div>
+                <div class="title" id="processing">Преобразование изображения</div>
             </div>
             <div class="plate">
                 <div class="image-container p-2">
@@ -208,15 +211,13 @@ private Bitmap binarization(Bitmap image, int threshold)
         <div class="col-2"></div>
         <div class="col-5">
             <div class="plate">
-                <div class="title">Литература</div>
+                <div class="title" id="further-reading">Литература</div>
             </div>
             <div class="plate">
-                <div class="description">
-                    <ol>
-                        <li>Gonzalez, Rafael C. & Woods, Richard E. (2002). Thresholding. In Digital Image Processing,
-                            pp. 760–785. Pearson Education. ISBN 81-7808-629-8
-                        </li>
-                    </ol>
+                <div class="sources">
+                    <div class="instruction-number">1</div>
+                    <div class="source-text">Gonzalez, Rafael C. & Woods, Richard E. (2002). Thresholding. In Digital Image Processing, pp. 760–785. Pearson Education. ISBN 81-7808-629-8</div>
+                    <img class="img-fluid" src="{% static '../static/img/flags/gb.svg' %}" alt="English">
                 </div>
             </div>
         </div>
