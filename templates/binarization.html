@@ -2,3 +2,145 @@
 {% load static %}
 
 {% block title %}{% include 'head.html' with title="Бинаризация — Imagenie" %}{% endblock %}
+
+{% block contents %}
+    <a class="list-entry" href="#theory">Теория</a>
+    <a class="list-entry" href="#visualization">Визуализация</a>
+    <a class="list-entry" href="#implementation">Реализация</a>
+    <a class="list-entry" href="#processing">Преобразование</a>
+    <a class="list-entry" href="#further-reading">Литература</a>
+{% endblock %}
+
+{% block theory %}
+    <div class="plate">
+        <div class="inline-category title" id="theory">Бинаризация</div>
+        <div class="inline-category"><p><a class="category" href="/">Простейшие алгоритмы</a>
+            <a class="category">&gt;</a> <a class="category" href="/">Бинаризация</a></p>
+        </div>
+    </div>
+    <div class="plate">
+        <div class="description"><p>Процесс бинаризации — это перевод цветного (или в градациях серого)
+            изображения в двухцветное черно-белое. Главным параметром такого преобразования является порог \(T\)
+            — значение, с которым сравнивается яркость каждого пикселя. По результатам сравнения, пикселю
+            присваивается значение \(0\) или \(1\).</p>
+            <p>$$\begin{cases}1,\text{if }\text{brightness}\ge T\\ 0\text{ otherwise}\end{cases}$$</p>
+            <p>$$\text{brightness}=0.299\cdot\text{Red}+0.587\cdot\text{Green}+0.114\cdot\text{Blue}$$</p>
+            <p>Существуют различные методы бинаризации, которые можно
+                условно разделить на две группы — глобальные и локальные. В первом случае величина порога
+                остается
+                неизменной в течение всего процесса бинаризации. Во втором изображение разбивается на области, в
+                каждой из которых вычисляется локальный порог.</p>
+            Главная цель бинаризации — это радикальное уменьшение количества информации, с которой приходится
+            работать. Просто говоря, удачная бинаризация сильно упрощает последующую работу с изображением. С
+            другой стороны, неудачи в процессе бинаризации могут привети к искажениям, таким, как разрывы в
+            линиях, потеря значащих деталей, нарушение целостности объектов, появление шума и непредсказуемое
+            искажение символов из-за неоднородностей фона. Различные методы бинаризации имеют свои слабые места:
+            так, например, метод Оцу может приводить к утрате мелких деталей и «слипанию» близлежащих символов,
+            а метод Ниблэка грешит появлением ложных объектов в случае неоднородностей фона с низкой
+            контрастностью. Отсюда следует, что каждый метод должен быть применен в своей области.
+            <div class="text-end">
+                <a class="description-source" href="https://habr.com/ru/post/278435/">Источник</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block languages %}
+    <div class="nav flex-column nav-pills" role="tablist" aria-orientation="vertical">
+        <button class="nav-link active" data-bs-target="#python" type="button" role="tab"
+                data-bs-toggle="pill">
+            Python
+        </button>
+        <button class="nav-link mb-3" data-bs-target="#csharp" type="button" role="tab"
+                data-bs-toggle="pill">
+            C#
+        </button>
+    </div>
+{% endblock %}
+
+{% block implementation %}
+    <div class="tab-pane fade show active" id="python" role="tabpanel">
+        <div class="plate">
+            <div class="mx-3"><pre><code class="language-python">from PIL import Image, ImageDraw
+
+
+def binarization(image_path: str, threshold: int) -> Image:
+    image = Image.open(image_path)
+    image = image.convert('L')
+    pix = image.load()
+    new_image = Image.new(size=image.size, mode='L')
+    draw = ImageDraw.Draw(new_image)
+    for y in range(image.width):
+        for x in range(image.height):
+            if (pix[x, y] >= threshold):
+                draw.point((x, y), 255)
+            else:
+                draw.point((x, y), 0)
+    return new_image</code></pre>
+            </div>
+        </div>
+    </div>
+    <div class="tab-pane fade" id="csharp" role="tabpanel">
+        <div class="plate">
+            <div class="mx-3"><pre><code class="language-csharp">using System;
+using System.Drawing;
+
+private Bitmap binarization(Bitmap image, int threshold)
+{
+    Bitmap newImage = new Bitmap(image.Width, image.Height);
+    for (int y = 0; y < image.Height; y++)
+    {
+        for (int x = 0; x < image.Width; x++)
+        {
+            var pixel = image.GetPixel(x, y);
+            double brightness = 0.299 * pixel.R + 0.587 * pixel.G + 0.114 * pixel.B;
+            if (brightness > threshold)
+            {
+                newImage.SetPixel(x, y, Color.White);
+            }
+            else
+                {
+                    newImage.SetPixel(x, y, Color.Black);
+                }
+        }
+    }
+    return newImage;
+}</code></pre>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block parameters %}
+    <div class="mx-3 mt-2">
+        <div class="mb-1">Пороговое значение</div>
+        <input class="form-control w-100" placeholder="Введите значение" id="param1">
+    </div>
+{% endblock %}
+
+{% block images %}
+    <div class="m-2">
+        <p class="description-label">Оригинал</p>
+        <img class="image-element img-fluid" src="{% static '../static/img/original.png' %}"
+             alt="Image (original)"
+             id="img-original">
+    </div>
+    <div class="m-2">
+        <p class="description-label">После преобразования</p>
+        <img class="image-element img-fluid" src="{% static '../static/img/binarization.png' %}"
+             alt="Image (processed)"
+             id="img-processed">
+    </div>
+{% endblock %}
+
+{% block further_reading %}
+    <div class="instruction-number">1</div>
+    <div class="source-text">Gonzalez, Rafael C. & Woods, Richard E. (2002). Thresholding. In Digital Image Processing,
+        pp. 760–785. Pearson Education. ISBN 81-7808-629-8
+    </div>
+    <img class="img-fluid" src="{% static '../static/img/flags/gb.svg' %}" alt="English">
+{% endblock %}
+
+{% block script %}
+    <script src="{% static '../static/js/binarization-visualization.js' %}"></script>
+{% endblock %}
