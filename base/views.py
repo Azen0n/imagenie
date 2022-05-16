@@ -7,8 +7,16 @@ from base.processing_functions import methods
 from base.utility import params_to_list, image_to_string
 
 
-def index(request):
+def main_page(request):
     return render(request, 'binarization.html')
+
+
+def binarization(request):
+    return render(request, 'binarization.html')
+
+
+def gaussian(request):
+    return render(request, 'gaussian.html')
 
 
 def process_image(request):

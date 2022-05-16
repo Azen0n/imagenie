@@ -6,7 +6,7 @@ processBtn.addEventListener('click', function () {
 
     $.ajax({
         method: 'POST',
-        url: method + '/',
+        url: 'process_image/',
         headers: {
             'X-CSRFToken': CSRF_TOKEN,
         },
