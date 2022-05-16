@@ -1,0 +1,87 @@
+{% extends 'algorithm.html' %}
+{% load static %}
+
+{% block title %}{% include 'head.html' with title="Фильтр Гаусса — Imagenie" %}{% endblock %}
+
+{% block contents %}
+    <a class="list-entry" href="#theory">Теория</a>
+    <a class="list-entry" href="#visualization">Визуализация</a>
+    <a class="list-entry" href="#implementation">Реализация</a>
+    <a class="list-entry" href="#processing">Преобразование</a>
+    <a class="list-entry" href="#further-reading">Литература</a>
+{% endblock %}
+
+{% block theory %}
+    <div class="plate">
+        <div class="inline-category title" id="theory">Фильтр Гаусса</div>
+    </div>
+    <div class="plate">
+        <div class="description">
+            Теория
+            <div class="text-end">
+                <a class="description-source" href="#">Источник</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block languages %}
+    <div class="nav flex-column nav-pills" role="tablist" aria-orientation="vertical">
+        <button class="nav-link active" data-bs-target="#python" type="button" role="tab"
+                data-bs-toggle="pill">
+            Python
+        </button>
+        <button class="nav-link mb-3" data-bs-target="#csharp" type="button" role="tab"
+                data-bs-toggle="pill">
+            C#
+        </button>
+    </div>
+{% endblock %}
+
+{% block implementation %}
+    <div class="tab-pane fade show active" id="python" role="tabpanel">
+        <div class="plate">
+            <div class="mx-3"><pre><code class="language-python">python</code></pre>
+            </div>
+        </div>
+    </div>
+    <div class="tab-pane fade" id="csharp" role="tabpanel">
+        <div class="plate">
+            <div class="mx-3"><pre><code class="language-csharp">C#</code></pre>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block parameters %}
+    <div class="mx-3 mt-2">
+        <div class="mb-1">Параметр</div>
+        <input class="form-control w-100" placeholder="Введите значение" id="param1">
+    </div>
+{% endblock %}
+
+{% block images %}
+    <div class="m-2">
+        <p class="description-label">Оригинал</p>
+        <img class="image-element img-fluid" src="{% static '../static/img/original.png' %}"
+             alt="Image (original)"
+             id="img-original">
+    </div>
+    <div class="m-2">
+        <p class="description-label">После преобразования</p>
+        <img class="image-element img-fluid" src="{% static '../static/img/gaussian.png' %}"
+             alt="Image (processed)"
+             id="img-processed">
+    </div>
+{% endblock %}
+
+{% block further_reading %}
+    <div class="instruction-number">1</div>
+    <div class="source-text">Литература
+    </div>
+    <img class="img-fluid" src="{% static '../static/img/flags/gb.svg' %}" alt="English">
+{% endblock %}
+
+{% block script %}
+    <script src="{% static '../static/js/gaussian-visualization.js' %}"></script>
+{% endblock %}

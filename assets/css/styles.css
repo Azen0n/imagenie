@@ -187,6 +187,14 @@ hr {
     animation: scaleElement 0.4s forwards;
 }
 
+.small-selected-grid-element {
+    align-self: center;
+    justify-self: center;
+    width: 33px;
+    height: 33px;
+    animation: scaleElementABit 0.2s forwards;
+}
+
 @keyframes scaleElement {
     0% {
         transform: scale(1.0);
@@ -196,6 +204,19 @@ hr {
     100% {
         transform: scale(1.5);
         border: 2px solid red;
+        border-radius: 0.3em;
+    }
+}
+
+@keyframes scaleElementABit {
+    0% {
+        transform: scale(1.0);
+        border: 1px solid red;
+        border-radius: 0.3em;
+    }
+    100% {
+        transform: scale(1.2);
+        border: 1px solid red;
         border-radius: 0.3em;
     }
 }
@@ -212,8 +233,8 @@ hr {
 
 .large-element {
     margin: 0.1em;
-    width: 50px;
-    height: 50px;
+    width: 51px;
+    height: 51px;
     border-radius: 0.3em;
 }
 

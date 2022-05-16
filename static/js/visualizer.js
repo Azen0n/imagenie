@@ -8,12 +8,14 @@ class Visualizer {
         this.row = 0;
         this.column = 0;
         this.largePixel = document.getElementById('large-element');
+        this.selectedPixelClass = 'selected-grid-element';
 
         this.image.onload = () => {
             this.colors = this.getColors();
             this.pixels = this.fillPixelGrid();
             this.processedPixels = this.fillProcessedPixelGrid();
             this.togglePixel(this.row, this.column);
+            this.toggleProcessedPixel(this.row, this.column);
             this.updateInstructions();
             this.backBtn.disabled = true;
         }
@@ -86,8 +88,10 @@ class Visualizer {
 
     switchPixel(row, column) {
         this.togglePixel(this.row, this.column);
+        this.toggleProcessedPixel(this.row, this.column);
         [this.row, this.column] = [row, column];
         this.togglePixel(this.row, this.column);
+        this.toggleProcessedPixel(this.row, this.column);
         this.changeLargePixel(this.colors[this.row][this.column]);
         this.updateInstructions();
 
@@ -96,14 +100,21 @@ class Visualizer {
 
     togglePixel(row, column) {
         let pixel = this.pixels[row][column];
+
+        if (pixel.classList.contains(this.selectedPixelClass)) {
+            pixel.classList.replace(this.selectedPixelClass, 'grid-element');
+        } else {
+            pixel.classList.replace('grid-element', this.selectedPixelClass);
+        }
+    }
+
+    toggleProcessedPixel(row, column) {
         let processedPixel = this.processedPixels[row][column];
 
-        if (pixel.classList.contains('selected-grid-element')) {
-            pixel.classList.replace('selected-grid-element', 'grid-element');
-            processedPixel.classList.replace('selected-grid-element', 'grid-element');
+        if (processedPixel.classList.contains(this.selectedPixelClass)) {
+            processedPixel.classList.replace(this.selectedPixelClass, 'grid-element');
         } else {
-            pixel.classList.replace('grid-element', 'selected-grid-element');
-            processedPixel.classList.replace('grid-element', 'selected-grid-element');
+            processedPixel.classList.replace('grid-element', this.selectedPixelClass);
         }
     }
 
