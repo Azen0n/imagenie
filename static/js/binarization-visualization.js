@@ -6,16 +6,15 @@ canvas.height = size;
 const ctx = canvas.getContext('2d');
 
 let image = new Image();
-image.src = 'static/img/visualization-pixels.png';
+image.src = '../static/img/visualization-pixels.png';
 
 let container = document.getElementById('grid-container');
 let newContainer = document.getElementById('new-grid-container');
-let largePixelPath = 'M 4 0 L 48 0 A 4 4 0 0 1 52 4 L 52 48 A 4 4 0 0 1 48 52 L 4 52 A 4 4 0 0 1 0 48 L 0 4 A 4 4 0 0 1 4 0';
 
 let colors = [];
 let pixels;
 let newPixels;
-let largePixel;
+let largePixel = document.getElementById('large-element');
 
 let backBtn = document.getElementById('back');
 let forwardBtn = document.getElementById('forward');
@@ -34,7 +33,6 @@ image.onload = () => {
 
     pixels = createPixels(size);
     newPixels = createNewPixels(size);
-    largePixel = drawLargePixel();
     selectPixel(currentRow, currentColumn);
     calcBrightness(colors[currentRow][currentColumn]);
     backBtn.disabled = true;
@@ -88,16 +86,8 @@ function turnDownPixel(i, j) {
     newPixels[i][j].classList.replace('selected-grid-element', 'grid-element');
 }
 
-function drawLargePixel() {
-    let largePixelContainer = document.getElementById('large-element');
-    let largePixel = SVG().width(52).height(52).addTo(largePixelContainer);
-    largePixel.path(largePixelPath);
-    largePixelContainer.firstChild.classList.add('large-element');
-    return largePixel;
-}
-
 function changeLargePixelColor(color) {
-    largePixel.fill('rgb(' + color[0] + ', ' + color[1] + ', ' + color[2] + ')');
+    largePixel.style.backgroundColor = 'rgb(' + color[0] + ', ' + color[1] + ', ' + color[2] + ')';
     let colorCode = document.getElementById('color-code');
     colorCode.innerHTML =
         '<div class="color-red"><b>R</b> ' + color[0] + '</div>' +
