@@ -17,12 +17,17 @@ class GaussianVisualizer extends Visualizer {
             for (let j = column - 1; j <= column + 1; ++j) {
                 if (!(i < 0 || i >= this.size || j < 0 || j >= this.size)) {
                     this.togglePixel(i, j);
-                    this.changeLargePixel(this.colors[i][j]);
                     this.updateInstructions();
+
+                    let value = document.createElement('div');
+                    value.className = 'kernel-value';
+                    value.innerHTML = '5';
+                    this.pixels[i][j].appendChild(value);
                 }
             }
         }
         this.toggleProcessedPixel(this.row, this.column);
+        this.changeLargePixel(this.colors[this.row][this.column]);
         this.backBtn.disabled = this.row === 0 && this.column === 0;
     }
 
@@ -40,3 +45,4 @@ let image = new Image();
 image.src = '../static/img/visualization-pixels.png';
 
 const visualizer = new GaussianVisualizer(5, image);
+
