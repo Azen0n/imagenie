@@ -330,3 +330,49 @@ hr {
     text-align: center;
     padding-top: 0.1em;
 }
+
+.main-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.card {
+    padding: 0.5em;
+}
+
+.card-image {
+    width: 5.5em;
+    height: 5.5em;
+    border-radius: 0.5em;
+    margin: 0.5em 0.625em 0.2em 0.2em;
+    float: left;
+}
+
+.card-title {
+    font-weight: 700;
+    font-size: 1.2em;
+}
+
+.card-text {
+    max-height: 100px;
+    margin-right: 0.5em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+}
+
+.tag-container {
+    margin-top: 0.2em;
+}
+
+.tag {
+    color: var(--blue);
+    background-color: #F1F1F1;
+    border-radius: 0.2em;
+    padding: 0.2em 0.3em;
+    font-size: 0.9em;
+    margin: 0.5em 0.2em;
+    white-space: nowrap;
+}
