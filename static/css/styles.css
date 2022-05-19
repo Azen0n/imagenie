@@ -369,10 +369,53 @@ hr {
 
 .tag {
     color: var(--blue);
-    background-color: #F1F1F1;
+    background-color: #F6F6F6;
     border-radius: 0.2em;
     padding: 0.2em 0.3em;
     font-size: 0.9em;
-    margin: 0.5em 0.2em;
+    overflow: hidden;
     white-space: nowrap;
+    text-overflow: ellipsis;
+    max-width: 200px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.entry-element {
+    display: inline-block;
+    margin: 0.5em;
+
+}
+
+.entry-element img {
+    border-radius: 0.5em;
+    width: 4em;
+    height: 4em;
+}
+
+.entry-text {
+    font-weight: 700;
+    font-size: 1.1em;
+}
+
+.search-group {
+    text-align: center;
+    vertical-align: middle;
+    margin: 1em 0;
+}
+
+.search {
+    height: 2.5em;
+    width: 20em;
+    font-size: 1.1em;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.search-group button {
+    height: 2.5em;
+    font-size: 1.1em;
+    color: white;
+    display: inline-block;
+    vertical-align: middle;
 }

@@ -11,146 +11,44 @@
         <div class="col-3"></div>
         <div class="col-6">
             <div class="plate mt-5">
-                <div class="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus leo justo,
-                    ornare ac mattis in, ultricies vel magna. Curabitur sit amet dui efficitur, volutpat elit vitae,
-                    imperdiet odio. Nullam ac nunc ullamcorper, ultrices nunc vitae, mattis nunc. Ut sed tempus ante.
-                    Etiam euismod nulla nulla, eget feugiat turpis aliquam sit amet. Mauris mollis id velit nec dictum.
-                    Duis urna est, molestie eu mauris sit amet, euismod venenatis augue. Integer mattis ligula et eros
-                    ultricies pharetra vel sed urna. Ut porttitor dolor quis velit aliquam eleifend. Pellentesque
-                    pretium tortor sollicitudin, mattis justo eget, facilisis metus. Maecenas faucibus convallis sem,
-                    nec porta sapien blandit non. Fusce efficitur consectetur cursus. Aliquam nisi mauris, accumsan at
-                    cursus in, aliquam vitae nisl.
+                <div class="description">Предварительная обработка является важным этапом в работе практически любой
+                    системы анализа изображений или компьютерного зрения. Данный этап играет ключевую роль в повышении
+                    качества дальнейшего анализа и интерпретации данных. Задачей обработки изображения может быть как
+                    улучшение (восстановление, реставрация) изображения по какому-то определенному критерию, так и
+                    специальное преобразование, кардинально меняющее изображение.
+                    <div class="text-end">
+                        <a class="description-source" href="http://jmlda.org/papers/doc/2015/no12/Gracheva2015ImageProcessing.pdf">Источник</a>
+                    </div>
                 </div>
             </div>
-            <div class="container-fluid main-grid">
-                <div class="plate p-2 m-2">
-                    <div>
-                        <img class="card-image" src="{% static '../static/img/binarization.png' %}" alt="binarization">
-                        <div class="card-text">
-                            <span class="card-title">Бинаризация</span>
-                            <br>
-                            Процесс бинаризации — это перевод цветного (или в градациях
-                            серого) изображения в двухцветное черно-белое. Главным параметром такого преобразования
-                            является...
-                        </div>
-                        <div class="tag-container">
-                            <span class="tag">простейшие алгоритмы</span>
-                            <span class="tag">еще один тег</span>
-                            <span class="tag">и третий тег, но очень длинный</span>
-                        </div>
-                    </div>
+
+            <div class="search-group">
+                <input class="form-control search" type="text">
+                <button class="btn bg-blue">Искать</button>
+            </div>
+
+            <div>
+                <div class="plate my-2">
+                    <span class="entry-element">
+                        <img src="{% static '../static/img/binarization.png' %}" alt="">
+                    </span>
+                    <span class="entry-element entry-text">Бинаризация</span>
+                    <span class="tag">простейшие алгоритмы</span>
                 </div>
-                <div class="plate p-2 m-2">
-                    <div>
-                        <img class="card-image"
-                             src="https://www.researchgate.net/profile/Fionn-Murtagh-2/publication/3325153/figure/fig6/AS:349558140882972@1460352563815/a-Lena-Gaussian-noise-b-Filtered-image.png"
-                             alt="binarization">
-                        <div class="card-text">
-                            <span class="card-title">Фильтр Гаусса</span>
-                            <br>
-                            Фильтр Гаусса — электронный фильтр, чьей импульсной переходной
-                            функцией является функция Гаусса. Фильтр Гаусса спроектирован таким образом, чтобы не иметь
-                            ...
-                        </div>
-                    </div>
+                <div class="plate my-2">
+                    <span class="entry-element">
+                        <img src="https://www.researchgate.net/profile/Fionn-Murtagh-2/publication/3325153/figure/fig6/AS:349558140882972@1460352563815/a-Lena-Gaussian-noise-b-Filtered-image.png"
+                             alt="">
+                    </span>
+                    <span class="entry-element entry-text">Фильтр Гаусса</span>
+                    <span class="tag">тег</span>
                 </div>
-                <div class="plate p-2 m-2">
-                    <div>
-                        <img class="card-image"
-                             src="https://cdn.frankerfacez.com/emoticon/545961/4"
-                             alt="binarization">
-                        <div class="card-text">
-                            <span class="card-title">Lorem Ipsum</span>
-                            <br>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus leo justo, ornare ac
-                            mattis in, ultricies vel magna. Curabitur sit amet dui efficitur, volutpat elit vitae,
-                            imperdiet odio. Nullam ac nunc ullamcorper, ultrices nunc vitae, mattis nunc.
-                        </div>
-                    </div>
-                </div>
-                <div class="plate p-2 m-2">
-                    <div>
-                        <img class="card-image"
-                             src="https://cdn.frankerfacez.com/emoticon/545961/4"
-                             alt="binarization">
-                        <div class="card-text">
-                            <span class="card-title">Lorem Ipsum</span>
-                            <br>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus leo justo, ornare ac
-                            mattis in, ultricies vel magna. Curabitur sit amet dui efficitur, volutpat elit vitae,
-                            imperdiet odio. Nullam ac nunc ullamcorper, ultrices nunc vitae, mattis nunc.
-                        </div>
-                    </div>
-                </div>
-                <div class="plate p-2 m-2">
-                    <div>
-                        <img class="card-image"
-                             src="https://cdn.frankerfacez.com/emoticon/545961/4"
-                             alt="binarization">
-                        <div class="card-text">
-                            <span class="card-title">Lorem Ipsum</span>
-                            <br>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus leo justo, ornare ac
-                            mattis in, ultricies vel magna. Curabitur sit amet dui efficitur, volutpat elit vitae,
-                            imperdiet odio. Nullam ac nunc ullamcorper, ultrices nunc vitae, mattis nunc.
-                        </div>
-                    </div>
-                </div>
-                <div class="plate p-2 m-2">
-                    <div>
-                        <img class="card-image"
-                             src="https://cdn.frankerfacez.com/emoticon/545961/4"
-                             alt="binarization">
-                        <div class="card-text">
-                            <span class="card-title">Lorem Ipsum</span>
-                            <br>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus leo justo, ornare ac
-                            mattis in, ultricies vel magna. Curabitur sit amet dui efficitur, volutpat elit vitae,
-                            imperdiet odio. Nullam ac nunc ullamcorper, ultrices nunc vitae, mattis nunc.
-                        </div>
-                    </div>
-                </div>
-                <div class="plate p-2 m-2">
-                    <div>
-                        <img class="card-image"
-                             src="https://cdn.frankerfacez.com/emoticon/545961/4"
-                             alt="binarization">
-                        <div class="card-text">
-                            <span class="card-title">Lorem Ipsum</span>
-                            <br>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus leo justo, ornare ac
-                            mattis in, ultricies vel magna. Curabitur sit amet dui efficitur, volutpat elit vitae,
-                            imperdiet odio. Nullam ac nunc ullamcorper, ultrices nunc vitae, mattis nunc.
-                        </div>
-                    </div>
-                </div>
-                <div class="plate p-2 m-2">
-                    <div>
-                        <img class="card-image"
-                             src="https://cdn.frankerfacez.com/emoticon/545961/4"
-                             alt="binarization">
-                        <div class="card-text">
-                            <span class="card-title">Lorem Ipsum</span>
-                            <br>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus leo justo, ornare ac
-                            mattis in, ultricies vel magna. Curabitur sit amet dui efficitur, volutpat elit vitae,
-                            imperdiet odio. Nullam ac nunc ullamcorper, ultrices nunc vitae, mattis nunc.
-                        </div>
-                    </div>
-                </div>
-                <div class="plate p-2 m-2">
-                    <div>
-                        <img class="card-image"
-                             src="https://cdn.frankerfacez.com/emoticon/545961/4"
-                             alt="binarization">
-                        <div class="card-text">
-                            <span class="card-title">Lorem Ipsum</span>
-                            <br>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus leo justo, ornare ac
-                            mattis in, ultricies vel magna. Curabitur sit amet dui efficitur, volutpat elit vitae,
-                            imperdiet odio. Nullam ac nunc ullamcorper, ultrices nunc vitae, mattis nunc.
-                        </div>
-                    </div>
+                <div class="plate my-2">
+                    <span class="entry-element">
+                        <img src="https://cdn.frankerfacez.com/emoticon/545961/4" alt="">
+                    </span>
+                    <span class="entry-element entry-text">Бинаризация</span>
+                    <span class="tag">тег</span>
                 </div>
             </div>
         </div>
