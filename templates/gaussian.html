@@ -13,11 +13,29 @@
 
 {% block theory %}
     <div class="plate">
-        <div class="inline-category title" id="theory">Фильтр Гаусса</div>
+        <div class="inline-category title" id="theory">Размытие по Гауссу</div>
     </div>
     <div class="plate">
         <div class="description">
-            Теория
+            Размытие по Гауссу в цифровой обработке изображений — способ размытия изображения с помощью функции Гаусса.
+            <p>Этот эффект широко используется в графических редакторах для уменьшения шума изображения и снижения
+                детализации. Размытие по Гауссу также используется в качестве этапа предварительной обработки в
+                алгоритмах компьютерного зрения для улучшения структуры изображения в различных масштабах.</p>
+            <p>Применение размытия по Гауссу к изображению математически аналогично свёртке изображения с помощью
+                функции Гаусса.</p>
+            <p>Функция Гаусса в двух измерениях</p>
+            <p>$$f(x,y)=\frac{1}{\sqrt{2\pi}\sigma^{2}}e^{\frac{-(x^{2}+y^{2})}{2\sigma^{2}}}\tag{1}$$</p>
+            <p>где \(x\), \(y\) — координаты точки,</p>
+            <p>а \(𝜎\) — среднеквадратическое отклонение нормального распределения.</p>
+            <p>Чем больше параметр \(𝜎\), тем сильнее размывается изображение. Как правило, радиус фильтра \(𝑟 = 3𝜎\). В
+                таком случае размер маски \(2𝑟+1×2𝑟+1\).</p>
+            <p>При применении в двух измерениях эта формула даёт поверхность, контуры которой представляют собой
+                концентрические окружности с нормальным распределением относительно центральной точки, то есть если
+                использовать эти пиксели как свертку для изображения, то пиксели, расположенные ближе к анализируемому
+                пикселю, будут оказывать влияние на результат больше, чем крайние.</p>
+            <p>Для изображения \(I\) итоговое изображение \(I'\) будет получено с использованием следующей формулы.</p>
+            <p>$$I'(x,y)=\sum_{i=-r}^{+r}\sum_{j=-r}^{+r}I(x+i)(y+j)\cdot
+                \frac{1}{\sqrt{2\pi}\sigma^{2}}e^{\frac{-(i^{2}+j^{2})}{2\sigma^{2}}}\tag{2}$$</p>
             <div class="text-end">
                 <a class="description-source" href="#">Источник</a>
             </div>
@@ -41,13 +59,88 @@
 {% block implementation %}
     <div class="tab-pane fade show active" id="python" role="tabpanel">
         <div class="plate">
-            <div class="mx-3"><pre><code class="language-python">python</code></pre>
+            <div class="mx-3">
+                <pre><code class="language-python">import math
+
+import numpy as np
+from PIL import Image, ImageDraw
+
+
+def get_gaussian_kernel(sigma: float) -> np.ndarray:
+    r = int(sigma * 2)
+    kernel = np.ndarray((2 * r + 1, 2 * r + 1))
+    for y in range(2 * r + 1):
+        for x in range(2 * r + 1):
+            kernel[x][y] = 1 / (2 * math.pi * math.pow(sigma, 2)) * math.exp(
+                -(math.pow(x - r, 2) + math.pow(y - r, 2)) / (2 * math.pow(sigma, 2)))
+    return kernel
+
+
+def gaussian_blur(image_path: str, sigma: float) -> Image:
+    image = Image.open(image_path)
+    image = image.convert('L')
+    pix = image.load()
+    new_image = Image.new(size=image.size, mode='L')
+    draw = ImageDraw.Draw(new_image)
+    kernel = get_gaussian_kernel(sigma)
+    r = int(kernel.shape[0] / 2)
+    for y in range(image.height):
+        for x in range(image.width):
+            amount = 0
+            for y_kernel in range(kernel.shape[0]):
+                for x_kernel in range(kernel.shape[0]):
+                    if (0 <= (y - r + y_kernel) < image.height) and (0 <= (x - r + x_kernel) < image.width):
+                        amount += pix[x + x_kernel - r, y + y_kernel - r] * kernel[x_kernel, y_kernel]
+            draw.point((x, y), round(amount))
+    return new_image</code></pre>
             </div>
         </div>
     </div>
     <div class="tab-pane fade" id="csharp" role="tabpanel">
         <div class="plate">
-            <div class="mx-3"><pre><code class="language-csharp">C#</code></pre>
+            <div class="mx-3">
+                <pre><code class="language-csharp">private double[,] getGaussianKernel(double sigma)
+        {
+            int r = (int)(sigma * 2);
+
+            double[,] kernel = new double[2*r+1, 2*r+1];
+            for (int y = 0; y < 2*r+1; y++)
+            {
+                for (int x = 0; x < 2 * r + 1; x++)
+                {
+                    kernel[x, y] = 1 / (2 * Math.PI * Math.Pow(sigma, 2)) * Math.Exp(-(Math.Pow(x - r, 2) + Math.Pow(y - r, 2)) / (2 * Math.Pow(sigma, 2)));
+                }
+            }
+            return kernel;
+        }
+
+private Bitmap gaussianBlur(Bitmap image, double sigma)
+{
+    Bitmap newImage = new Bitmap(image.Width, image.Height);
+    double[,] kernel = getGaussianKernel(sigma);
+    int r = kernel.GetLength(0) / 2;
+    for (int y = 0; y < image.Height; y++)
+    {
+        for (int x = 0; x < image.Width; x++)
+        {
+            double amount = 0;
+            for (int y_kernel = 0; y_kernel < kernel.GetLength(0); y_kernel++)
+            {
+                for (int x_kernel = 0; x_kernel < kernel.GetLength(1); x_kernel++)
+                {
+                    if (((y-r+y_kernel) >= 0 && (y-r+y_kernel) < image.Height) && ((x-r+x_kernel) >= 0 && (x-r+x_kernel) < image.Width))
+                    {
+                        var pixel = image.GetPixel(x + x_kernel - r, y + y_kernel - r);
+                        double brightness = 0.299 * pixel.R + 0.587 * pixel.G + 0.114 * pixel.B;
+                        amount += brightness * kernel[x_kernel, y_kernel];
+                    }
+                }
+            }
+            newImage.SetPixel(x, y, Color.FromArgb((int)amount, (int)amount, (int)amount));
+        }
+    }
+    return newImage;
+}</code></pre>
             </div>
         </div>
     </div>
@@ -69,7 +162,7 @@
     </div>
     <div class="m-2">
         <p class="description-label">После преобразования</p>
-        <img class="image-element img-fluid" src="{% static '../static/img/gaussian.png' %}"
+        <img class="image-element img-fluid" src="https://i.imgur.com/HbXxePi.png"
              alt="Image (processed)"
              id="img-processed">
     </div>

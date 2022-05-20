@@ -325,10 +325,12 @@ hr {
     position: absolute;
     margin-left: auto;
     margin-right: auto;
-    left: 0;
-    right: 0;
     text-align: center;
-    padding-top: 0.1em;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 0.6em;
+    margin-top: 0.15em;
 }
 
 .main-grid {
