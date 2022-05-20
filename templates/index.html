@@ -10,24 +10,27 @@
     <div class="row bg-gray">
         <div class="col-3"></div>
         <div class="col-6">
-            <div class="plate mt-5">
-                <div class="description">Предварительная обработка является важным этапом в работе практически любой
-                    системы анализа изображений или компьютерного зрения. Данный этап играет ключевую роль в повышении
-                    качества дальнейшего анализа и интерпретации данных. Задачей обработки изображения может быть как
-                    улучшение (восстановление, реставрация) изображения по какому-то определенному критерию, так и
-                    специальное преобразование, кардинально меняющее изображение.
+            <div class="plate">
+                <div class="inline-category title" id="theory">Последняя обновленная статья</div>
+            </div>
+            <div class="plate mt-2">
+                <div class="description w-50">Размытие по Гауссу в цифровой обработке изображений — способ размытия
+                    изображения с помощью функции Гаусса.
+                    Этот эффект широко используется в графических редакторах для уменьшения шума изображения и снижения
+                    детализации. Размытие по Гауссу также используется в качестве этапа предварительной обработки в
+                    алгоритмах компьютерного зрения для улучшения структуры изображения в различных масштабах.
                     <div class="text-end">
-                        <a class="description-source" href="http://jmlda.org/papers/doc/2015/no12/Gracheva2015ImageProcessing.pdf">Источник</a>
+                        <a class="description-source"
+                           href="http://jmlda.org/papers/doc/2015/no12/Gracheva2015ImageProcessing.pdf">Подробнее</a>
                     </div>
                 </div>
             </div>
 
-            <div class="search-group">
-                <input class="form-control search" type="text">
-                <button class="btn bg-blue">Искать</button>
-            </div>
 
             <div>
+                <div class="plate">
+                    <div class="inline-category title" id="theory">Алгоритмы</div>
+                </div>
                 <div class="plate my-2">
                     <span class="entry-element">
                         <img src="{% static '../static/img/binarization.png' %}" alt="">
@@ -41,15 +44,9 @@
                              alt="">
                     </span>
                     <span class="entry-element entry-text">Фильтр Гаусса</span>
-                    <span class="tag">тег</span>
+                    <span class="tag">размытие</span>
                 </div>
-                <div class="plate my-2">
-                    <span class="entry-element">
-                        <img src="https://cdn.frankerfacez.com/emoticon/545961/4" alt="">
-                    </span>
-                    <span class="entry-element entry-text">Бинаризация</span>
-                    <span class="tag">тег</span>
-                </div>
+
             </div>
         </div>
         <div class="col-3"></div>

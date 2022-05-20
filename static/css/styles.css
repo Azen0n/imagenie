@@ -11,6 +11,10 @@
     background-color: var(--blue);
 }
 
+.bg-light-blue {
+    background: var(--light-blue);
+}
+
 .bg-gray {
     background-color: var(--gray);
 }
@@ -291,7 +295,6 @@ hr {
 
 .instruction {
     margin-left: 0.5em;
-    display: flex;
     align-items: center;
 }
 
@@ -420,4 +423,21 @@ hr {
     color: white;
     display: inline-block;
     vertical-align: middle;
+}
+
+.open-btn {
+    color: white;
+    width: 4em;
+}
+
+.open-btn:hover {
+    color: white;
+}
+
+.invisible-formulas {
+    display: none;
+}
+
+.visible-formulas {
+    display: block;
 }
