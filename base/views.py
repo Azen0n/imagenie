@@ -5,18 +5,30 @@ from django.shortcuts import render
 
 from base.processing_functions import methods
 from base.utility import params_to_list, image_to_string
+from .models import Article, Script, Code, Parameter, FurtherReading
 
 
 def index(request):
     return render(request, 'index.html')
 
 
-def binarization(request):
-    return render(request, 'binarization.html')
 
+def algorithm(request, id: int):
+    article = Article.objects.get(id=id)
+    scripts = Script.objects.filter(article_id=id)
+    code = Code.objects.filter(article_id=id)
+    parameters = Parameter.objects.filter(article_id=id)
+    further_reading = FurtherReading.objects.filter(article_id=id)
 
-def gaussian(request):
-    return render(request, 'gaussian.html')
+    context = {
+        'article': article,
+        'scripts': scripts,
+        'code': code,
+        'parameters': parameters,
+        'further_reading': further_reading,
+    }
+
+    return render(request, 'algorithm.html', context)
 
 
 def process_image(request):

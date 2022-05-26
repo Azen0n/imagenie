@@ -11,15 +11,22 @@ class TimeStampedModel(models.Model):
 
 class Article(TimeStampedModel):
     title = models.CharField(max_length=50)
+    lower_en_title = models.CharField(max_length=50)
     theory = models.TextField()
     theory_source = models.CharField(max_length=200)
     image_before = models.CharField(max_length=100)
     image_after = models.CharField(max_length=100)
 
 
+class Script(models.Model):
+    article = models.ForeignKey(Article, on_delete=models.CASCADE)
+    path = models.CharField(max_length=100)
+
+
 class Code(models.Model):
     article = models.ForeignKey(Article, on_delete=models.CASCADE)
     language = models.CharField(max_length=30)
+    language_class = models.CharField(max_length=30)
     implementation = models.TextField()
 
 

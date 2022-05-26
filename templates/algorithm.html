@@ -2,7 +2,7 @@
 <!doctype html>
 
 <html lang="en">
-{% block title %}{% endblock %}
+{% include 'head.html' with title=article.title|add:" — Imagenie" %}
 
 <body>
 {% include 'navbar.html' %}
@@ -14,13 +14,25 @@
             <div class="plate">
                 <p class="list-title">Содержание</p>
                 <hr>
-                {% block contents %}
-                {% endblock %}
+                <a class="list-entry" href="#theory">Теория</a>
+                <a class="list-entry" href="#visualization">Визуализация</a>
+                <a class="list-entry" href="#implementation">Реализация</a>
+                <a class="list-entry" href="#processing">Преобразование</a>
+                <a class="list-entry" href="#further-reading">Литература</a>
             </div>
         </div>
         <div class="col-5">
-            {% block theory %}
-            {% endblock %}
+            <div class="plate">
+                <div class="inline-category title" id="theory">{{ article.title }}</div>
+            </div>
+            <div class="plate">
+                <div class="description">
+                    {{ article.theory }}
+                    <div class="text-end">
+                        <a class="description-source" href="{{ article.theory_source }}">Источник</a>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="col-2"></div>
         <div class="col-1"></div>
@@ -57,8 +69,15 @@
             <div class="plate">
                 <p class="list-title">Языки программирования</p>
                 <hr>
-                {% block languages %}
-                {% endblock %}
+                <div class="nav flex-column nav-pills" role="tablist" aria-orientation="vertical">
+                    {% for lang in code %}
+                        <button class="nav-link{% if forloop.first %} active{% endif %} {% if forloop.last %} mb-3{% endif %}"
+                                data-bs-target="#{{ lang.language_class }}" type="button" role="tab"
+                                data-bs-toggle="pill">
+                            {{ lang.language }}
+                        </button>
+                    {% endfor %}
+                </div>
             </div>
         </div>
         <div class="col-5">
@@ -66,8 +85,16 @@
                 <div class="title" id="implementation">Реализация</div>
             </div>
             <div class="tab-content">
-                {% block implementation %}
-                {% endblock %}
+                {% for lang in code %}
+                    <div class="tab-pane fade{% if forloop.first %} show active{% endif %}" id="{{ lang.language_class }}"
+                         role="tabpanel">
+                        <div class="plate">
+                            <div class="mx-3">
+                                <pre><code class="{{ lang.language_class }}">{{ lang.implementation }}</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
             </div>
         </div>
         <div class="col-2"></div>
@@ -83,10 +110,16 @@
                     <div class="mb-1">Загрузить изображение</div>
                     <input class="form-control text-start w-100" type="file" id="image-file">
                 </div>
-                {% block parameters %}
-                {% endblock %}
+                {% for param in parameters %}
+                    <div class="mx-3 mt-2">
+                        <div class="mb-1">{{ param.name }}</div>
+                        <input class="form-control w-100" placeholder="Введите значение"
+                               id="param{{ forloop.counter }}">
+                    </div>
+                {% endfor %}
                 <div class="mx-3 mt-4 mb-3">
-                    <button class="btn bg-blue text-start text-white w-100" id="process-btn" name="binarization">
+                    <button class="btn bg-blue text-start text-white w-100" id="process-btn"
+                            name="{{ article.lower_en_title }}">
                         Преобразовать
                     </button>
                 </div>
@@ -98,8 +131,18 @@
             </div>
             <div class="plate">
                 <div class="image-container p-2">
-                    {% block images %}
-                    {% endblock %}
+                    <div class="m-2">
+                        <p class="description-label">Оригинал</p>
+                        <img class="image-element img-fluid" src="{% static article.image_before %}"
+                             alt="Image (original)"
+                             id="img-original">
+                    </div>
+                    <div class="m-2">
+                        <p class="description-label">После преобразования</p>
+                        <img class="image-element img-fluid" src="{% static article.image_after %}"
+                             alt="Image (processed)"
+                             id="img-processed">
+                    </div>
                 </div>
             </div>
         </div>
@@ -115,8 +158,11 @@
             </div>
             <div class="plate">
                 <div class="sources">
-                    {% block further_reading %}
-                    {% endblock %}
+                    {% for source in further_reading %}
+                        <div class="instruction-number">{{ forloop.counter }}</div>
+                        <div class="source-text">{{ source.name }}</div>
+                        <img class="img-fluid" src="{% static source.image %}" alt="{{ source.get_language_display }}">
+                    {% endfor %}
                 </div>
             </div>
         </div>
@@ -129,8 +175,9 @@
 
 <script type="text/javascript">window.CSRF_TOKEN = "{{ csrf_token }}";</script>
 <script src="{% static '../static/js/visualizer.js' %}"></script>
-{% block script %}
-{% endblock %}
+{% for script in scripts %}
+    <script src="{% static script.path %}"></script>
+{% endfor %}
 <script src="{% static '../static/js/ajax-process-image.js' %}"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <script src="{% static '../static/js/prism.js' %}"></script>
