@@ -9,7 +9,14 @@ from .models import Article, Script, Code, Parameter, FurtherReading
 
 
 def index(request):
-    return render(request, 'index.html')
+    articles = Article.objects.all()
+    last_modified_article = Article.objects.order_by('-modified_at').first()
+
+    context = {
+        'articles': articles,
+        'last_modified_article': last_modified_article,
+    }
+    return render(request, 'index.html', context)
 
 
 
