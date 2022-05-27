@@ -1,11 +1,12 @@
 import cv2
 import numpy as np
+from django.db.models import Count
 from django.http import JsonResponse
 from django.shortcuts import render
 
 from base.processing_functions import methods
 from base.utility import params_to_list, image_to_string
-from .models import Article, Script, Code, Parameter, FurtherReading
+from .models import Article, Script, Code, Parameter, FurtherReading, Test, Question
 
 
 def index(request):
@@ -47,3 +48,13 @@ def process_image(request):
     processed_image = image_to_string(methods[method](image, *params))
     context = {'image': processed_image}
     return JsonResponse(context)
+
+
+def tests(request, id: int):
+    number_of_questions = Question.objects.all().values('test_id').annotate(total=Count('test_id'))
+
+    context = {
+        'tests': zip(Test.objects.filter(article_id=id), number_of_questions),
+        'article': Article.objects.get(id=id),
+    }
+    return render(request, 'tests.html', context)

@@ -1,0 +1,56 @@
+{% load static %}
+<!doctype html>
+
+<html lang="en">
+{% include 'head.html' with title='Тесты по алгоритму «'|add:article.title|add:"» — Imagenie" %}
+
+<body>
+{% include 'navbar.html' %}
+<div class="container-fluid h-100 bg-gray">
+    <div class="row bg-gray">
+        <div class="col-2"></div>
+        <div class="col-2">
+            <div class="plate">
+                <p class="list-title">
+                    <a class="text-decoration-none text-black" href="../{{ article.id }}">&lt; к статье</a>
+                </p>
+            </div>
+        </div>
+        <div class="col-5">
+            <div class="plate">
+                <div class="inline-category title">Тесты по алгоритму «{{ article.title }}»</div>
+            </div>
+        </div>
+        <div class="col-2"></div>
+        <div class="col-1"></div>
+    </div>
+
+    <div class="row bg-gray">
+        <div class="col-2"></div>
+        <div class="col-2"></div>
+        <div class="col-5">
+            <div>
+                {% for test, number_of_questions in tests %}
+                    <div class="plate my-2">
+                        <a class="entry-element entry-text text-decoration-none text-black"
+                           href="tests/{{ test.id }}">{{ test.title }}
+                        </a>
+                        <span class="tag">{{ number_of_questions.total }} вопроса</span>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="col-2"></div>
+        <div class="col-1"></div>
+    </div>
+{% include 'footer.html' %}
+</div>
+<script type="text/javascript">window.CSRF_TOKEN = "{{ csrf_token }}";</script>
+<script src="{% static '../static/js/visualizer.js' %}"></script>
+<script src="{% static '../static/js/ajax-process-image.js' %}"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script src="{% static '../static/js/prism.js' %}"></script>
+<script src="{% static '../static/bootstrap/js/bootstrap.min.js' %}"></script>
+<script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js'></script>
+</body>
+</html>
