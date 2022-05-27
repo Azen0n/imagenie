@@ -45,3 +45,20 @@ class FurtherReading(models.Model):
     name = models.TextField()
     language = models.CharField(max_length=2, choices=LANGUAGE_CHOICES)
     image = models.CharField(max_length=50)
+
+
+class Test(TimeStampedModel):
+    article = models.ForeignKey(Article, on_delete=models.CASCADE)
+    title = models.CharField(max_length=50)
+    description = models.TextField()
+
+
+class Question(models.Model):
+    test = models.ForeignKey(Test, on_delete=models.CASCADE)
+    text = models.TextField()
+
+
+class Answer(models.Model):
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    text = models.TextField()
+    is_correct = models.BooleanField()
