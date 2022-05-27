@@ -7,19 +7,20 @@ class GaussianVisualizer extends Visualizer {
         //    ['2', '4', '2'],
         //    ['1', '2', '1']
         //];
+
+        // this.kernel = [
+        //     [0.0042074237114239, 0.05644980945147707, 0.0042074237114239],
+        //     [0.05644980945147707, 0.7573710673483963, 0.05644980945147707],
+        //     [0.0042074237114239, 0.05644980945147707, 0.0042074237114239]
+        // ];
+
         //this.kernel = [
-        //    ['0.0004', '0.0399', '0.0004'],
-        //    ['0.0399', '3.5905', '0.0399'],
-        //    ['0.0004', '0.0399', '0.0004']
+        //    ['∙', '•', '∙'],
+        //    ['•', '⬤', '•'],
+        //    ['∙', '•', '∙']
         //];
-
-        this.kernel = [
-            ['∙', '•', '∙'],
-            ['•', '⬤', '•'],
-            ['∙', '•', '∙']
-        ];
-
-        this.sigma = 1 / 3;
+//
+        this.sigma = 1;
         this.kernel = this.calcKernel(this.sigma);
 
         this.row = 1;
@@ -46,6 +47,9 @@ class GaussianVisualizer extends Visualizer {
                         this.switchPixel(i, j);
                     });
                 }
+                pixel.addEventListener('mouseenter', () => {
+                    this.changeLargePixel(this.colors[i][j]);
+                });
                 pixelGrid.appendChild(pixel);
                 pixels[i].push(pixel);
             }
@@ -81,7 +85,7 @@ class GaussianVisualizer extends Visualizer {
             kernel.push([]);
             for (let j = -1; j <= 1; ++j) {
                 kernel[i + 1].push(
-                    Math.pow(Math.E, -((i * i + j * j) / (2 * sigma * sigma))) / (Math.sqrt(2 * Math.PI) * sigma * sigma)
+                    1 / (2 * Math.PI * Math.pow(sigma, 2)) * Math.pow(Math.E, (-(Math.pow(i, 2) + Math.pow(j, 2)) / (2 * Math.pow(sigma, 2))))
                 );
             }
         }
@@ -126,7 +130,9 @@ class GaussianVisualizer extends Visualizer {
     }
 
     formula(sigma, x, y) {
-        return Math.E ** -((x * x + y * y) / (2 * sigma ** 2)) / ((2 * Math.PI) ** 0.5 * sigma ** 2)
+        console.log(x + ' ' + y);
+        //return Math.E ** -((x * x + y * y) / (2 * sigma ** 2)) / ((2 * Math.PI) ** 0.5 * sigma ** 2)
+        return 1;//Math.pow(Math.E,-((x * x + y * y) / (2 * sigma ** 2))) / (Math.pow(2 * Math.PI,1/2) * Math.pow(sigma ,1/2))
     }
 
     updateInstructions() {
@@ -145,7 +151,7 @@ class GaussianVisualizer extends Visualizer {
         }
 
         for (let pixel of pixels) {
-            let gaussian = this.formula(1 / 3, pixel[0][0], pixel[0][1]);
+            let gaussian = this.formula(1 / 3, pixel[0][0] - 1, pixel[0][1] - 1);
             console.log(`R: ${pixel[1][0]} G: ${pixel[1][1]} B: ${pixel[1][2]} | gaussian: ${gaussian}`);
         }
 
@@ -202,11 +208,11 @@ class GaussianVisualizer extends Visualizer {
             sumLabel
         ];
 
-        for (let i = 0; i < instructionHeaders.length; ++i) {
+        for (let i = 0; i < instructionHeaders.length - 1; ++i) {
 
             let formula = '';
             let labels = instructionDescriptions[i];
-            for (let label of labels) {
+            for (let label of labels.slice(1)) {
                 formula += label + '<br>';
             }
 
@@ -214,11 +220,38 @@ class GaussianVisualizer extends Visualizer {
                 `<div class="instruction-number">${i + 1}</div>` +
                 `<div class="instruction">${instructionHeaders[i]}</div>` +
                 `<div></div>` +
-            `<div class="instruction-formula mathjax-font">${formula}</div>`;
-
+                `<div class="instruction-formula mathjax-font">${labels[0]}<br>
+                 <button class="btn bg-light-blue open-btn mt-1" id="btn${i + 1}">• • •</button>
+                 <div class="invisible-formulas mt-1" id="formulas${i + 1}">${formula}</div>
+                 </div>`;
 
             instructions.innerHTML += instruction;
         }
+
+        setTimeout(() => {
+            for (let i = 0; i < 2; ++i) {
+                let btn = document.getElementById(`btn${i + 1}`);
+                console.log(btn);
+
+                btn.addEventListener('click', () => {
+                    console.log('1111111111111111111111111111111111111111111111')
+                    let formulas = document.getElementById(`formulas${i + 1}`);
+                    if (formulas.classList.contains('invisible-formulas')) {
+                        formulas.classList.replace('invisible-formulas', 'visible-formulas');
+                    } else {
+                        formulas.classList.replace('visible-formulas', 'invisible-formulas');
+                    }
+                });
+            }
+        }, 500)
+
+        let instruction =
+            `<div class="instruction-number">${3}</div>` +
+            `<div class="instruction">${instructionHeaders[2]}</div>` +
+            `<div></div>` +
+            `<div class="instruction-formula mathjax-font">${instructionDescriptions[2][0]}</div>`
+
+        instructions.innerHTML += instruction;
     }
 }
 
