@@ -7,11 +7,12 @@ class GaussianVisualizer extends Visualizer {
         //    ['2', '4', '2'],
         //    ['1', '2', '1']
         //];
-        this.kernel = [
-            [0.0042074237114239, 0.05644980945147707, 0.0042074237114239],
-            [0.05644980945147707, 0.7573710673483963, 0.05644980945147707],
-            [0.0042074237114239, 0.05644980945147707, 0.0042074237114239]
-        ];
+
+        // this.kernel = [
+        //     [0.0042074237114239, 0.05644980945147707, 0.0042074237114239],
+        //     [0.05644980945147707, 0.7573710673483963, 0.05644980945147707],
+        //     [0.0042074237114239, 0.05644980945147707, 0.0042074237114239]
+        // ];
 
         //this.kernel = [
         //    ['∙', '•', '∙'],
@@ -19,8 +20,8 @@ class GaussianVisualizer extends Visualizer {
         //    ['∙', '•', '∙']
         //];
 //
-        //this.sigma = 1 / 3;
-        //this.kernel = this.calcKernel(this.sigma);
+        this.sigma = 1;
+        this.kernel = this.calcKernel(this.sigma);
 
         this.row = 1;
         this.column = 1;
@@ -84,8 +85,7 @@ class GaussianVisualizer extends Visualizer {
             kernel.push([]);
             for (let j = -1; j <= 1; ++j) {
                 kernel[i + 1].push(
-                    //Math.pow(Math.E, -((i * i + j * j) / (2 * sigma * sigma))) / (Math.sqrt(2 * Math.PI) * sigma * sigma)
-                    Math.pow(Math.E, -((i * i + j * j) / (2 * sigma ** 2))) / (Math.pow(2 * Math.PI, 1 / 2) * Math.pow(sigma, 2))
+                    1 / (2 * Math.PI * Math.pow(sigma, 2)) * Math.pow(Math.E, (-(Math.pow(i, 2) + Math.pow(j, 2)) / (2 * Math.pow(sigma, 2))))
                 );
             }
         }
