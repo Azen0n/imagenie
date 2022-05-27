@@ -425,6 +425,27 @@ hr {
     vertical-align: middle;
 }
 
+.last-modified-article {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-template-rows: 1fr;
+}
+
+.last-modified-article .description {
+    grid-column: 1;
+    grid-row: 1;
+}
+
+.last-modified-article .img-fluid {
+    text-align: center;
+    margin-top: 1.5em;
+    grid-column: 2;
+    grid-row: 1;
+}
+
+.last-modified-article .image {
+    border-radius: 0.5em;
+
 .open-btn {
     color: white;
     width: 4em;

@@ -10,43 +10,38 @@
     <div class="row bg-gray">
         <div class="col-3"></div>
         <div class="col-6">
-            <div class="plate">
-                <div class="inline-category title" id="theory">Последняя обновленная статья</div>
+            <div class="plate mt-5">
+                <div class="title">Последняя обновленная статья — {{ last_modified_article.title }}</div>
             </div>
-            <div class="plate mt-2">
-                <div class="description w-50">Размытие по Гауссу в цифровой обработке изображений — способ размытия
-                    изображения с помощью функции Гаусса.
-                    Этот эффект широко используется в графических редакторах для уменьшения шума изображения и снижения
-                    детализации. Размытие по Гауссу также используется в качестве этапа предварительной обработки в
-                    алгоритмах компьютерного зрения для улучшения структуры изображения в различных масштабах.
-                    <div class="text-end">
-                        <a class="description-source"
-                           href="http://jmlda.org/papers/doc/2015/no12/Gracheva2015ImageProcessing.pdf">Подробнее</a>
+            <div class="plate">
+                <div class="last-modified-article">
+                    <div class="description">
+                        {{ last_modified_article.theory }}
+                        <div class="text-end">
+                            <a class="description-source"
+                               href="articles/{{ last_modified_article.id }}">Подробнее</a>
+                        </div>
                     </div>
+                    <img class="img-fluid image" src="{% static last_modified_article.image_after %}" alt="Processed image">
                 </div>
             </div>
 
+
+            <div class="plate mt-3">
+                <div class="title">Алгоритмы</div>
+            </div>
 
             <div>
-                <div class="plate">
-                    <div class="inline-category title" id="theory">Алгоритмы</div>
-                </div>
-                <div class="plate my-2">
+                {% for article in articles %}
+                    <div class="plate my-2">
                     <span class="entry-element">
-                        <img src="{% static '../static/img/binarization.png' %}" alt="">
+                        <img src="{% static article.image_after %}" alt="">
                     </span>
-                    <span class="entry-element entry-text">Бинаризация</span>
-                    <span class="tag">простейшие алгоритмы</span>
-                </div>
-                <div class="plate my-2">
-                    <span class="entry-element">
-                        <img src="https://www.researchgate.net/profile/Fionn-Murtagh-2/publication/3325153/figure/fig6/AS:349558140882972@1460352563815/a-Lena-Gaussian-noise-b-Filtered-image.png"
-                             alt="">
-                    </span>
-                    <span class="entry-element entry-text">Фильтр Гаусса</span>
-                    <span class="tag">размытие</span>
-                </div>
-
+                        <a class="entry-element entry-text text-decoration-none text-black"
+                           href="articles/{{ article.id }}">{{ article.title }}</a>
+                        <span class="tag">тег</span>
+                    </div>
+                {% endfor %}
             </div>
         </div>
         <div class="col-3"></div>
