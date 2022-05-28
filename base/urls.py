@@ -7,4 +7,5 @@ urlpatterns = [
     path('process_image/', views.process_image, name='process_image'),
     path('articles/<int:id>', views.algorithm, name='algorithm'),
     path('articles/<int:id>/tests', views.tests, name='tests'),
+    path('articles/<int:article_id>/tests/<int:test_id>', views.test, name='test'),
 ]

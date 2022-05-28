@@ -463,3 +463,42 @@ hr {
 .visible-formulas {
     display: block;
 }
+
+.question-text {
+    padding: 1em;
+    font-size: 1.1em;
+    display: grid;
+    grid-template-columns: 1.7em auto;
+}
+
+.answer {
+    font-size: 1.1em;
+    margin: 0 0 1em 3.2em;
+
+}
+
+.form-check-input {
+    width: 0.9em;
+    height: 0.9em;
+    margin-top: 0.3em;
+}
+
+.form-check-input:checked {
+    background-color: var(--blue);
+    border-color: var(--blue);
+}
+
+.btn-finish {
+    background: var(--blue);
+    font-size: 1.1em;
+    color: white;
+    padding: 0.5em 2em;
+}
+
+.btn-finish:hover {
+    color: white;
+}
+
+.btn-finish:active {
+    color: white;
+}

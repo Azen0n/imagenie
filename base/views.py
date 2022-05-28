@@ -6,7 +6,7 @@ from django.shortcuts import render
 
 from base.processing_functions import methods
 from base.utility import params_to_list, image_to_string
-from .models import Article, Script, Code, Parameter, FurtherReading, Test, Question
+from .models import Article, Script, Code, Parameter, FurtherReading, Test, Question, Answer
 
 
 def index(request):
@@ -58,3 +58,10 @@ def tests(request, id: int):
         'article': Article.objects.get(id=id),
     }
     return render(request, 'tests.html', context)
+
+
+def test(request, article_id: int, test_id: int):
+    context = {
+        'test': Test.objects.get(id=test_id),
+    }
+    return render(request, 'test.html', context)
