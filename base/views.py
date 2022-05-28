@@ -1,3 +1,5 @@
+import json
+
 import cv2
 import numpy as np
 from django.db.models import Count
@@ -65,3 +67,18 @@ def test(request, article_id: int, test_id: int):
         'test': Test.objects.get(id=test_id),
     }
     return render(request, 'test.html', context)
+
+
+def get_test_results(request, article_id: int, test_id: int):
+    answers = json.loads(request.POST.get('answers'))
+    questions = Question.objects.filter(test_id=test_id)
+
+    correct_answers = []
+    for i, question in enumerate(questions):
+        question_answers = question.answer_set.all()
+        for j, answer in enumerate(question_answers):
+            if answer.is_correct:
+                correct_answers.append((answers[i][j], question.text, answer.text))
+
+    context = {'correct_answers': correct_answers}
+    return JsonResponse(context)
