@@ -22,17 +22,18 @@ def index(request):
     return render(request, 'index.html', context)
 
 
-
 def algorithm(request, id: int):
     article = Article.objects.get(id=id)
     scripts = Script.objects.filter(article_id=id)
     code = Code.objects.filter(article_id=id)
     parameters = Parameter.objects.filter(article_id=id)
     further_reading = FurtherReading.objects.filter(article_id=id)
+    number_of_tests = len(Test.objects.filter(article_id=id).annotate(total=Count('article_id')))
 
     context = {
         'article': article,
         'scripts': scripts,
+        'number_of_tests': number_of_tests,
         'code': code,
         'parameters': parameters,
         'further_reading': further_reading,
