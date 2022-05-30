@@ -16,6 +16,7 @@
                 <hr>
                 <a class="list-entry" href="#theory">Теория</a>
                 <a class="list-entry" href="#visualization">Визуализация</a>
+                <a class="list-entry" href="#tests">Тесты</a>
                 <a class="list-entry" href="#implementation">Реализация</a>
                 <a class="list-entry" href="#processing">Преобразование</a>
                 <a class="list-entry" href="#further-reading">Литература</a>
@@ -65,6 +66,31 @@
     </div>
     <div class="row bg-gray">
         <div class="col-2"></div>
+        <div class="col-2"></div>
+        <div class="col-5">
+            <div class="plate">
+                <div class="title" id="tests">Тесты</div>
+            </div>
+            <div class="plate">
+                <div class="description">
+                    {% if number_of_tests %}
+                        Тесты по теме для самопроверки.
+                        <div>
+                        <a class="btn bg-blue text-white mt-3" href="{{ article.id }}/tests">
+                            Перейти к тестам
+                        </a>
+                        </div>
+                    {% else %}
+                        По теме не найдено тестов.
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="col-2"></div>
+        <div class="col-1"></div>
+    </div>
+    <div class="row bg-gray">
+        <div class="col-2"></div>
         <div class="col-2">
             <div class="plate">
                 <p class="list-title">Языки программирования</p>
@@ -86,7 +112,8 @@
             </div>
             <div class="tab-content">
                 {% for lang in code %}
-                    <div class="tab-pane fade{% if forloop.first %} show active{% endif %}" id="{{ lang.language_class }}"
+                    <div class="tab-pane fade{% if forloop.first %} show active{% endif %}"
+                         id="{{ lang.language_class }}"
                          role="tabpanel">
                         <div class="plate">
                             <div class="mx-3">
@@ -169,9 +196,8 @@
         <div class="col-2"></div>
         <div class="col-1"></div>
     </div>
-
-    {% include 'footer.html' %}
 </div>
+{% include 'footer.html' %}
 
 <script type="text/javascript">window.CSRF_TOKEN = "{{ csrf_token }}";</script>
 <script src="{% static '../static/js/visualizer.js' %}"></script>

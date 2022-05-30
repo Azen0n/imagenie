@@ -1,0 +1,87 @@
+{% load static %}
+<!doctype html>
+
+<html lang="en">
+{% include 'head.html' with title=test.title|add:" — Imagenie" %}
+
+<body>
+{% include 'navbar.html' %}
+<div class="container-fluid h-100 bg-gray">
+    <div class="row bg-gray">
+        <div class="col-2"></div>
+        <div class="col-2">
+            <div class="plate">
+                <p class="list-title">
+                    <a class="text-decoration-none text-black" href="../{{ article.id }}tests">&lt; к тестам</a>
+                </p>
+            </div>
+        </div>
+        <div class="col-5">
+            <div class="plate">
+                <div class="inline-category title">{{ test.title }}</div>
+            </div>
+            <div class="plate">
+                <div class="description">{{ test.description }}</div>
+            </div>
+        </div>
+        <div class="col-2"></div>
+        <div class="col-1"></div>
+    </div>
+
+    <div class="row bg-gray">
+        <div class="col-2"></div>
+        <div class="col-2"></div>
+        <div class="col-5">
+            <div>
+                {% for question in test.question_set.all %}
+                    <div class="plate my-2">
+                        <div class="question-text">
+                            <div class="instruction-number">{{ forloop.counter }}</div>
+                            <div class="instruction entry-text">{{ question.text }}</div>
+                        </div>
+                        <div class="mb-4">
+                            {% for answer in question.answer_set.all %}
+                                <div class="form-check answer">
+                                    <input class="form-check-input blue-radio"
+                                           name="flexRadioDefault{{ forloop.parentloop.counter }}" type="radio"
+                                           id="answer-{{ forloop.parentloop.counter }}-{{ forloop.counter }}">
+                                    <label class="form-check-label"
+                                           for="answer-{{ forloop.parentloop.counter }}-{{ forloop.counter }}">
+                                        {{ answer.text }}
+                                    </label>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="text-center my-3">
+                <button class="btn btn-finish" id="finish-btn">Завершить</button>
+            </div>
+        </div>
+        <div class="col-2"></div>
+        <div class="col-1"></div>
+
+        <div class="fader d-none" id="fader">
+            <div class="modal d-none" id="modal">
+                <div class="plate">
+                    <div class="title" id="modal-title">Результат</div>
+                    <div id="modal-results"></div>
+                </div>
+            </div>
+        </div>
+        {% include 'footer.html' %}
+    </div>
+</div>
+
+<script type="text/javascript">
+    window.CSRF_TOKEN = "{{ csrf_token }}";
+    window.testId = {{ test.id }};
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script src="{% static '../static/js/tests.js' %}"></script>
+<script src="{% static '../static/js/prism.js' %}"></script>
+<script src="{% static '../static/bootstrap/js/bootstrap.min.js' %}"></script>
+<script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js'></script>
+</body>
+</html>

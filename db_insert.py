@@ -221,7 +221,7 @@ def insert_script():
 def truncate_all_tables():
     con = sqlite3.connect('db.sqlite3', isolation_level=None)
     cursor = con.cursor()
-    sqls = [
+    queries = [
         "delete from base_article",
         "delete from base_script",
         "delete from base_code",
@@ -233,16 +233,94 @@ def truncate_all_tables():
         "update sqlite_sequence set seq=0 where name='base_parameter'",
         "update sqlite_sequence set seq=0 where name='base_furtherreading'",
     ]
-    for sql in sqls:
+    for sql in queries:
         cursor.execute(sql)
         cursor.execute('vacuum')
         con.commit()
 
 
-if __name__ == '__main__':
+def truncate_test_question_answer():
+    con = sqlite3.connect('db.sqlite3', isolation_level=None)
+    cursor = con.cursor()
+    queries = [
+        "delete from base_test",
+        "delete from base_question",
+        "delete from base_answer",
+        "update sqlite_sequence set seq=0 where name='base_test'",
+        "update sqlite_sequence set seq=0 where name='base_question'",
+        "update sqlite_sequence set seq=0 where name='base_answer'",
+    ]
+    for sql in queries:
+        cursor.execute(sql)
+        cursor.execute('vacuum')
+        con.commit()
+
+
+def insert_test():
+    con = sqlite3.connect('db.sqlite3')
+    cursor = con.cursor()
+    sql = '''insert into base_test(title, description, article_id, created_at, modified_at)
+    values (?, ?, ?, datetime('now'), datetime('now'))'''
+    data = ['Пробный тест', '''Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus tempus ac quam id 
+    posuere. Nunc ut laoreet leo, et posuere orci. Donec porttitor est nunc, sit amet efficitur massa imperdiet a. 
+    Mauris leo risus, pulvinar congue laoreet aliquet, fermentum a lorem. Mauris eget tincidunt nunc, eu scelerisque 
+    nisi.''', 1]
+    cursor.execute(sql, data)
+    con.commit()
+
+
+def insert_questions():
+    con = sqlite3.connect('db.sqlite3')
+    cursor = con.cursor()
+    sql = '''insert into base_question(text, test_id) values (?, ?)'''
+    data = [
+        ('Великобритания состоит из следующих стран: Англия, Северная Ирландия, Уэльс и…', 1),
+        ('Как называется семейная стая львов?', 1),
+        ('Как звали женщину из греческой мифологии, у которой вместо волос были змеи?', 1)
+    ]
+    cursor.executemany(sql, data)
+    con.commit()
+
+
+def insert_answers():
+    con = sqlite3.connect('db.sqlite3')
+    cursor = con.cursor()
+    sql = '''insert into base_answer(text, question_id, is_correct) values (?, ?, ?)'''
+    data = [
+        ('Франция', 1, False),
+        ('Венгрия', 1, False),
+        ('Шотландия', 1, True),
+        ('Австрия', 1, False),
+
+        ('Отряд', 2, False),
+        ('Пакет', 2, False),
+        ('Стадо', 2, False),
+        ('Прайд', 2, True),
+
+        ('Пандора', 3, False),
+        ('Елена', 3, False),
+        ('Кассиопея', 3, False),
+        ('Медуза', 3, True),
+    ]
+    cursor.executemany(sql, data)
+    con.commit()
+
+
+def insert_article_stuff():
     truncate_all_tables()
     insert_article()
     insert_script()
     insert_code()
     insert_params()
     insert_further_reading()
+
+
+def insert_test_stuff():
+    truncate_test_question_answer()
+    insert_test()
+    insert_questions()
+    insert_answers()
+
+
+if __name__ == '__main__':
+    insert_test_stuff()
