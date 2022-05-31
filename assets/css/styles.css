@@ -11,6 +11,10 @@
     background-color: var(--blue);
 }
 
+.bg-light-blue {
+    background: var(--light-blue);
+}
+
 .bg-gray {
     background-color: var(--gray);
 }
@@ -36,6 +40,10 @@
 
 .logo:hover {
     color: var(--gray);
+}
+
+body {
+    background-color: var(--gray);
 }
 
 body, html {
@@ -188,6 +196,7 @@ hr {
 }
 
 .small-selected-grid-element {
+    position: relative;
     align-self: center;
     justify-self: center;
     width: 33px;
@@ -290,7 +299,6 @@ hr {
 
 .instruction {
     margin-left: 0.5em;
-    display: flex;
     align-items: center;
 }
 
@@ -318,4 +326,207 @@ hr {
 
 .source-text {
     padding: 0 0.5em;
+}
+
+.kernel-value {
+    position: absolute;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 0.6em;
+    margin-top: 0.15em;
+}
+
+.main-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.card {
+    padding: 0.5em;
+}
+
+.card-image {
+    width: 5.5em;
+    height: 5.5em;
+    border-radius: 0.5em;
+    margin: 0.5em 0.625em 0.2em 0.2em;
+    float: left;
+}
+
+.card-title {
+    font-weight: 700;
+    font-size: 1.2em;
+}
+
+.card-text {
+    max-height: 100px;
+    margin-right: 0.5em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+}
+
+.tag-container {
+    margin-top: 0.2em;
+}
+
+.tag {
+    color: var(--blue);
+    background-color: #F6F6F6;
+    border-radius: 0.2em;
+    padding: 0.2em 0.3em;
+    font-size: 0.9em;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    max-width: 200px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.entry-element {
+    display: inline-block;
+    margin: 0.5em;
+
+}
+
+.entry-element img {
+    border-radius: 0.5em;
+    width: 4em;
+    height: 4em;
+}
+
+.entry-text {
+    font-weight: 700;
+    font-size: 1.1em;
+}
+
+.search-group {
+    text-align: center;
+    vertical-align: middle;
+    margin: 1em 0;
+}
+
+.search {
+    height: 2.5em;
+    width: 20em;
+    font-size: 1.1em;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.search-group button {
+    height: 2.5em;
+    font-size: 1.1em;
+    color: white;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.last-modified-article {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-template-rows: 1fr;
+}
+
+.last-modified-article .description {
+    grid-column: 1;
+    grid-row: 1;
+}
+
+.last-modified-article .img-fluid {
+    text-align: center;
+    margin-top: 1.5em;
+    grid-column: 2;
+    grid-row: 1;
+}
+
+.last-modified-article .image {
+    border-radius: 0.5em;
+}
+
+.open-btn {
+    color: white;
+    width: 4em;
+}
+
+.open-btn:hover {
+    color: white;
+}
+
+.invisible-formulas {
+    display: none;
+}
+
+.visible-formulas {
+    display: block;
+}
+
+.question-text {
+    padding: 1em;
+    font-size: 1.1em;
+    display: grid;
+    grid-template-columns: 1.7em auto;
+}
+
+.answer {
+    font-size: 1.1em;
+    margin: 0 0 1em 3.2em;
+
+}
+
+.form-check-input {
+    width: 0.9em;
+    height: 0.9em;
+    margin-top: 0.3em;
+}
+
+.form-check-input:checked {
+    background-color: var(--blue);
+    border-color: var(--blue);
+}
+
+.btn-finish {
+    background: var(--blue);
+    font-size: 1.1em;
+    color: white;
+    padding: 0.5em 2em;
+}
+
+.btn-finish:hover {
+    color: white;
+}
+
+.btn-finish:active {
+    color: white;
+}
+
+.fader {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    z-index: 99;
+    background: rgba(0,0,0,0.5);
+}
+
+.modal {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 2em;
+    width: 50em;
+}
+
+.modal-answer {
+    margin: 0.5em 0 0.5em 0.5em;
 }

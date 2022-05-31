@@ -42,6 +42,10 @@
     color: var(--gray);
 }
 
+body {
+    background-color: var(--gray);
+}
+
 body, html {
     height: 100%;
 }
