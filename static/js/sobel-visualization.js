@@ -1,27 +1,19 @@
-class GaussianVisualizer extends Visualizer {
+class SobelVisualizer extends Visualizer {
     constructor(size, image) {
         super(size, image);
         this.selectedPixelClass = 'small-selected-grid-element';
-        //this.kernel = [
-        //    ['1', '2', '1'],
-        //    ['2', '4', '2'],
-        //    ['1', '2', '1']
-        //];
-
-        // this.kernel = [
-        //     [0.0042074237114239, 0.05644980945147707, 0.0042074237114239],
-        //     [0.05644980945147707, 0.7573710673483963, 0.05644980945147707],
-        //     [0.0042074237114239, 0.05644980945147707, 0.0042074237114239]
-        // ];
-
-        //this.kernel = [
-        //    ['∙', '•', '∙'],
-        //    ['•', '⬤', '•'],
-        //    ['∙', '•', '∙']
-        //];
-//
-        this.sigma = 1;
-        this.kernel = this.calcKernel(this.sigma);
+        this.kernelX = [
+            [1, 0, -1],
+            [2, 0, -2],
+            [1, 0, -1]
+        ];
+        this.kernelY = [
+            [1, 2, 1],
+            [0, 0, 0],
+            [-1, -2, -1]
+        ];
+        this.activeKernel = this.kernelX;
+        this.kernelBtn = this.createKernelButton();
 
         this.row = 1;
         this.column = 1;
@@ -30,7 +22,33 @@ class GaussianVisualizer extends Visualizer {
             this.togglePixel(this.row, this.column);
             this.toggleProcessedPixel(this.row, this.column);
             this.switchPixel(this.row, this.column);
+            this.switchPixel(this.row, this.column);
         }, 100);
+    }
+
+    createKernelButton() {
+        let toggleBtn = document.createElement('button');
+        toggleBtn.classList.add('btn', 'bg-blue', 'text-white', 'kernel-btn');
+        toggleBtn.setAttribute('data-bs-toggle', 'button');
+        toggleBtn.id = 'kernel-btn';
+        toggleBtn.innerHTML = 'Y';
+
+        toggleBtn.addEventListener('click', () => {
+            this.setActiveKernel();
+            this.switchPixel(this.row, this.column);
+        });
+        document.getElementsByClassName('btn-arrows')[0].appendChild(toggleBtn);
+        return toggleBtn;
+    }
+
+    setActiveKernel() {
+        if (this.kernelBtn.classList.contains('active')) {
+            this.activeKernel = this.kernelY;
+            this.kernelBtn.innerHTML = 'Y';
+        } else {
+            this.activeKernel = this.kernelX;
+            this.kernelBtn.innerHTML = 'X';
+        }
     }
 
     fillPixelGrid() {
@@ -79,19 +97,6 @@ class GaussianVisualizer extends Visualizer {
         return [row, column];
     }
 
-    calcKernel(sigma) {
-        let kernel = [];
-        for (let i = -1; i <= 1; ++i) {
-            kernel.push([]);
-            for (let j = -1; j <= 1; ++j) {
-                kernel[i + 1].push(
-                    1 / (2 * Math.PI * Math.pow(sigma, 2)) * Math.pow(Math.E, (-(Math.pow(i, 2) + Math.pow(j, 2)) / (2 * Math.pow(sigma, 2))))
-                );
-            }
-        }
-        return kernel;
-    }
-
     switchPixel(row, column) {
         this.turnOffAllPixels();
         [this.row, this.column] = [row, column];
@@ -102,8 +107,8 @@ class GaussianVisualizer extends Visualizer {
                     this.togglePixel(this.row - 1 + i, this.column - 1 + j);
 
                     let value = document.createElement('div');
-                    value.classList.add('kernel-value');
-                    value.innerHTML = Number(this.kernel[i][j]).toFixed(4);
+                    value.classList.add('kernel-value-large');
+                    value.innerHTML = this.activeKernel[i][j];
                     if (calcBrightness(this.colors[this.row - 1 + i][this.column - 1 + j]) > 128) {
                         value.style.color = this.RGBAsString([0, 0, 0]);
                     } else {
@@ -129,12 +134,6 @@ class GaussianVisualizer extends Visualizer {
         }
     }
 
-    formula(sigma, x, y) {
-        console.log(x + ' ' + y);
-        //return Math.E ** -((x * x + y * y) / (2 * sigma ** 2)) / ((2 * Math.PI) ** 0.5 * sigma ** 2)
-        return 1;//Math.pow(Math.E,-((x * x + y * y) / (2 * sigma ** 2))) / (Math.pow(2 * Math.PI,1/2) * Math.pow(sigma ,1/2))
-    }
-
     updateInstructions() {
         let instructions = document.getElementById('instructions');
         instructions.innerHTML = '';
@@ -148,11 +147,6 @@ class GaussianVisualizer extends Visualizer {
                     pixels.push([[i_, j_], this.colors[i_][j_]]);
                 }
             }
-        }
-
-        for (let pixel of pixels) {
-            let gaussian = this.formula(1 / 3, pixel[0][0] - 1, pixel[0][1] - 1);
-            console.log(`R: ${pixel[1][0]} G: ${pixel[1][1]} B: ${pixel[1][2]} | gaussian: ${gaussian}`);
         }
 
         let brightnesses = [];
@@ -170,88 +164,83 @@ class GaussianVisualizer extends Visualizer {
             );
         }
 
-        let values = [];
-        let valueLabels = [];
-        let flatKernel = this.kernel.flat();
-        for (let i in brightnesses) {
-            let value = brightnesses[i] * flatKernel[i];
-            values.push(value);
-            let [x, y] = [(i - (i % 3)) / 3, i % 3];
-            valueLabels.push(
-                `value<sub>${x},${y}</sub> = ${brightnesses[i]} ⋅ ${Number(flatKernel[i]).toFixed(4)} = ${Number(value).toFixed(4)}`
-            );
+        let values = [[], []];
+        let derivativeLabel = [`<div class="me-3">G<sub>x</sub> = `, `<div class="me-3">G<sub>y</sub> = `];
+        let sum = [];
+        let kernels = [this.kernelX.flat(), this.kernelY.flat()];
+
+        for (let i = 0; i < 2; ++i) {
+            for (let j in brightnesses) {
+                let value = brightnesses[j] * kernels[i][j];
+                values[i].push(value);
+                derivativeLabel[i] += `${brightnesses[j]} ⋅ ${(kernels[i][j] < 0) ? '(' + kernels[i][j] + ')': kernels[i][j]} + `;
+            }
+            derivativeLabel[i] = derivativeLabel[i].slice(0, -2);
+            let total = 0;
+            for (let value of values[i]) {
+                total += value;
+            }
+            sum.push(Math.round(total / values[i].length));
+            derivativeLabel[i] += `= ${sum[i]}</div>`;
         }
 
-        let sum = 0;
-        let sumLabel = '';
-        for (let i in values) {
-            sum += values[i];
-            sumLabel += `${Number(values[i]).toFixed(4)} + `;
-        }
+        let sobelValue = Math.sqrt(sum[0] * sum[0] + sum[1] * sum[1]);
+        let sobelValueLabel = `G = √<span style="text-decoration: overline">${sum[0]}<sup>2</sup> + ${sum[1]}<sup>2</sup></span> = ${Number(sobelValue).toFixed(2)} ≈ ${Math.round(sobelValue)}`;
 
-        sumLabel = sumLabel.substring(0, sumLabel.length - 2);
-
-        sumLabel += `→ ${Math.round(sum)}`;
-        sumLabel = [sumLabel];
-
-        this.changeProcessedPixelColor([Math.round(sum), Math.round(sum), Math.round(sum)]);
+        this.changeProcessedPixelColor([Math.round(sobelValue), Math.round(sobelValue), Math.round(sobelValue)]);
 
         let instructionHeaders = [
             'Вычисление яркости пикселей',
-            `Произведение яркости пикселей на соответствующие значения ядра, вычисленные по формуле&nbsp;<span class="mathjax-font">(1)</span>`,
-            `Вычисление итогого значения как суммы произведений`
+            `Произведение яркости пикселей на соответствующие значения ядра Собеля&nbsp;(<span class="mathjax-font">x</span>)`,
+            `Произведение яркости пикселей на соответствующие значения ядра Собеля&nbsp;(<span class="mathjax-font">y</span>)`,
+            `Вычисление итогого значения по формуле`
         ];
 
         let instructionDescriptions = [
             brightnessLabels,
-            valueLabels,
-            sumLabel
+            derivativeLabel[0],
+            derivativeLabel[1],
+            sobelValueLabel
         ];
 
-        for (let i = 0; i < instructionHeaders.length - 1; ++i) {
+        let formula = '';
+        let labels = instructionDescriptions[0];
+        for (let label of labels.slice(1)) {
+            formula += label + '<br>';
+        }
 
-            let formula = '';
-            let labels = instructionDescriptions[i];
-            for (let label of labels.slice(1)) {
-                formula += label + '<br>';
-            }
+        let brightnessInstruction =
+            `<div class="instruction-number">1</div>` +
+            `<div class="instruction">${instructionHeaders[0]}</div>` +
+            `<div></div>` +
+            `<div class="instruction-formula mathjax-font">${labels[0]}<br>
+                <button class="btn bg-light-blue open-btn mt-1" id="btn1">• • •</button>
+                <div class="invisible-formulas mt-1" id="formulas1">${formula}</div>
+                </div>`;
 
+        instructions.innerHTML += brightnessInstruction;
+
+        for (let i = 1; i < instructionHeaders.length; ++i) {
             let instruction =
                 `<div class="instruction-number">${i + 1}</div>` +
                 `<div class="instruction">${instructionHeaders[i]}</div>` +
                 `<div></div>` +
-                `<div class="instruction-formula mathjax-font">${labels[0]}<br>
-                 <button class="btn bg-light-blue open-btn mt-1" id="btn${i + 1}">• • •</button>
-                 <div class="invisible-formulas mt-1" id="formulas${i + 1}">${formula}</div>
-                 </div>`;
+                `<div class="instruction-formula mathjax-font">${instructionDescriptions[i]}</div>`;
 
             instructions.innerHTML += instruction;
         }
 
         setTimeout(() => {
-            for (let i = 0; i < 2; ++i) {
-                let btn = document.getElementById(`btn${i + 1}`);
-                console.log(btn);
-
-                btn.addEventListener('click', () => {
-                    console.log('1111111111111111111111111111111111111111111111')
-                    let formulas = document.getElementById(`formulas${i + 1}`);
-                    if (formulas.classList.contains('invisible-formulas')) {
-                        formulas.classList.replace('invisible-formulas', 'visible-formulas');
-                    } else {
-                        formulas.classList.replace('visible-formulas', 'invisible-formulas');
-                    }
-                });
-            }
-        }, 500)
-
-        let instruction =
-            `<div class="instruction-number">${3}</div>` +
-            `<div class="instruction">${instructionHeaders[2]}</div>` +
-            `<div></div>` +
-            `<div class="instruction-formula mathjax-font">${instructionDescriptions[2][0]}</div>`
-
-        instructions.innerHTML += instruction;
+            let btn = document.getElementById(`btn1`);
+            btn.addEventListener('click', () => {
+                let formulas = document.getElementById(`formulas1`);
+                if (formulas.classList.contains('invisible-formulas')) {
+                    formulas.classList.replace('invisible-formulas', 'visible-formulas');
+                } else {
+                    formulas.classList.replace('visible-formulas', 'invisible-formulas');
+                }
+            });
+        }, 500);
     }
 }
 
@@ -262,5 +251,4 @@ function calcBrightness(color) {
 let image = new Image();
 image.src = '../static/img/visualization-pixels.png';
 
-const visualizer = new GaussianVisualizer(5, image);
-
+const visualizer = new SobelVisualizer(5, image);

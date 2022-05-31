@@ -1,10 +1,11 @@
 :root {
     --blue: #6495ed;
+    --dark-blue: #2B56A0;
     --gray: #f8f8f8;
     --light-blue: #b8d4fc;
-    --dark-red: #c30000;
-    --dark-green: #07c300;
-    --dark-blue: #000ec3;
+    --dim-red: #c30000;
+    --dim-green: #07c300;
+    --dim-blue: #000ec3;
 }
 
 .bg-blue {
@@ -20,15 +21,15 @@
 }
 
 .color-red {
-    color: var(--dark-red);
+    color: var(--dim-red);
 }
 
 .color-green {
-    color: var(--dark-green);
+    color: var(--dim-green);
 }
 
 .color-blue {
-    color: var(--dark-blue);
+    color: var(--dim-blue);
 }
 
 .logo {
@@ -336,6 +337,18 @@ hr {
     margin-top: 0.15em;
 }
 
+.kernel-value-large {
+    position: absolute;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1em;
+    margin-top: 0.15em;
+}
+
 .main-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -525,4 +538,13 @@ hr {
 
 .modal-answer {
     margin: 0.5em 0 0.5em 0.5em;
+}
+
+.btn.active {
+    background-color: var(--dark-blue) !important;
+    border-radius: 0.3em;
+}
+
+.kernel-btn {
+    width: 4em;
 }
