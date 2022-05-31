@@ -322,7 +322,7 @@ def insert_test_stuff():
     insert_answers()
 
 
-def insert_sobel():
+def insert_sobel_article():
     con = sqlite3.connect('db.sqlite3')
     cursor = con.cursor()
     sql = '''insert into base_article(title, lower_en_title, theory, theory_source, image_before, image_after, created_at, modified_at)
@@ -341,5 +341,84 @@ $$G = \sqrt{G^{2}_x + G^{2}_y}$$
     con.commit()
 
 
+def insert_sobel_code():
+    con = sqlite3.connect('db.sqlite3')
+    cursor = con.cursor()
+    sql = '''insert into base_code(language, language_class, implementation, article_id)
+                     values (?, ?, ?, ?)'''
+    data = [('C#', 'language-csharp', '''using System;
+using System.Drawing;
+
+private Bitmap sobel(Bitmap image)
+{
+    Bitmap newImage = new Bitmap(image.Width, image.Height);
+    int[,] kernel_dx = new int[3, 3]
+    {
+        {-1, 0, 1},
+        {-2, 0, 2},
+        {-1, 0, 1}
+    };
+    int[,] kernel_dy = new int[3, 3]
+    {
+        {-1, -2, -1},
+        {0, 0, 0},
+        {1, 2, 1}
+    };
+    for (int y = 1; y < image.Height-1; y++)
+    {
+        for (int x = 1; x < image.Width-1; x++)
+        {
+            double gx = 0;
+            double gy = 0;
+            double brightness;
+            for (int i = -1; i <= 1; i++)
+            {
+                for (int j = -1; j <= 1; j++)
+                {
+                    var pixel = image.GetPixel(x+i, y+j);
+                    brightness = (0.299 * pixel.R + 0.587 * pixel.G + 0.114 * pixel.B);
+                    gx += brightness * kernel_dx[i + 1,j + 1];
+                    gy += brightness * kernel_dy[i + 1,j + 1];
+                }
+            }
+            double g = Math.Sqrt(Math.Pow(gx, 2) + Math.Pow(gy, 2))>255?255 : Math.Sqrt(Math.Pow(gx, 2) + Math.Pow(gy, 2));
+            newImage.SetPixel(x, y, Color.FromArgb((int)g, (int)g, (int)g));
+        }
+    }
+    return newImage;
+}''', 3),
+            ('python', 'language-python', '''def sobel(image: Image) -> Image:
+    image = image.convert('L')
+    kernel_dx = np.array([[-1, 0, 1],
+                          [-2, 0, 2],
+                          [-1, 0, 1]])
+    kernel_dy = np.array([[-1, -2, -1],
+                          [0, 0, 0],
+                          [1, 2, 1]])
+    kernel_size = 3
+    pixels = np.asarray(image).astype(int)
+    new_pixels = np.zeros((image.height, image.width))
+    for x in range(image.height - kernel_size + 1):
+        for y in range(1, image.width - kernel_size + 1):
+            kernel_pixels = pixels[x:x + kernel_size, y:y + kernel_size]
+            new_pixels[x + 1, y + 1] = int(
+                ((np.sum(kernel_dx * kernel_pixels)) ** 2 + (np.sum(kernel_dy * kernel_pixels)) ** 2) ** 0.5)
+    new_image = Image.fromarray(np.uint8(new_pixels), 'L')
+
+    return new_image''', 3)]
+    cursor.executemany(sql, data)
+    con.commit()
+
+
+def insert_sobel_script():
+    con = sqlite3.connect('db.sqlite3')
+    cursor = con.cursor()
+    sql = '''insert into base_script(path, article_id)
+                             values (?, ?)'''
+    data = ['../static/js/sobel-visualization.js', 3]
+    cursor.execute(sql, data)
+    con.commit()
+
+
 if __name__ == '__main__':
-    insert_sobel()
+    insert_sobel_script()
