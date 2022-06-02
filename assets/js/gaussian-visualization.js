@@ -13,6 +13,7 @@ class GaussianVisualizer extends Visualizer {
             this.toggleProcessedPixel(this.row, this.column);
             this.switchPixel(this.row, this.column);
             this.switchPixel(this.row, this.column);
+            this.changeLargePixel(this.colors[this.row][this.column]);
         }, 100);
     }
 

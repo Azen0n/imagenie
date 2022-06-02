@@ -3,6 +3,9 @@ class BinarizationVisualizer extends Visualizer {
         super(size, image);
         this.threshold = 128;
         this.createThresholdInput();
+        setTimeout(() => {
+            this.changeLargePixel(this.colors[this.row][this.column]);
+        }, 100);
     }
 
     createThresholdInput() {
