@@ -4,7 +4,24 @@
 {% block title %}{% include 'head.html' with title="Imagenie — алгоритмы обработки изображений" %}{% endblock %}
 
 <body>
-{% include 'navbar.html' %}
+<nav class="navbar bg-blue">
+    <div class="container-fluid">
+        <div class="col-3"></div>
+        <div class="col-6">
+            <div class="d-flex justify-content-between">
+                <div class="my-2">
+                    <a class="logo" href="/">IMAGENIE</a>
+                </div>
+                <form class="d-flex justify-content-end" action="/search" method="get">
+                    <input class="form-control me-2 search-bar" type="search"
+                           placeholder="Введите название алгоритма" name="key" id="search-input">
+                    <button class="btn btn-outline-light" type="submit">Найти</button>
+                </form>
+            </div>
+        </div>
+        <div class="col-3"></div>
+    </div>
+</nav>
 
 <div class="container-fluid">
     <div class="row bg-gray">
@@ -22,7 +39,8 @@
                                href="articles/{{ last_modified_article.id }}">Подробнее</a>
                         </div>
                     </div>
-                    <img class="img-fluid image" src="{% static last_modified_article.image_after %}" alt="Processed image">
+                    <img class="img-fluid image" src="{% static last_modified_article.image_after %}"
+                         alt="Processed image">
                 </div>
             </div>
 
