@@ -34,6 +34,7 @@ class SobelVisualizer extends Visualizer {
         toggleBtn.innerHTML = 'Y';
 
         toggleBtn.addEventListener('click', () => {
+            this.forwardBtn.classList.remove('pulse-btn');
             this.setActiveKernel();
             this.switchPixel(this.row, this.column);
         });
