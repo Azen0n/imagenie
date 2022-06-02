@@ -420,5 +420,42 @@ def insert_sobel_script():
     con.commit()
 
 
+def insert_sobel_further_reading():
+    con = sqlite3.connect('db.sqlite3')
+    cursor = con.cursor()
+    sql = '''insert into base_furtherreading(name, language, image, article_id)
+                         values (?, ?, ?, ?)'''
+    data = ['''Визильтер Ю.В., Желтов С.Ю., Бондаренко А.В., Осоков М.В., Моржин А.В. Обработка и анализ изображений в задачах машинного зрения: Курс лекций и практических занятий. М. : Физматкнига, 2010. – с. 152–161''',
+            'RU', '../static/img/flags/ru.svg', 3]
+    cursor.execute(sql, data)
+    con.commit()
+
+
+def update_sobel_images():
+    con = sqlite3.connect('db.sqlite3')
+    cursor = con.cursor()
+    sql = '''update base_article set image_before = ?, image_after = ? where id = 3'''
+    data = ['../static/img/original.png', '../static/img/sobel.png']
+    cursor.execute(sql, data)
+    con.commit()
+
+
+def update_sobel_theory():
+    con = sqlite3.connect('db.sqlite3')
+    cursor = con.cursor()
+    sql = '''update base_article set theory = ? where id = 3'''
+    data = ['''Оператор Собеля используется в области обработки изображений. Часто его применяют в алгоритмах выделения границ. По сути, это дискретный дифференциальный оператор, вычисляющий приближенное значение градиента яркости изображения. Результатом применения оператора Собеля в каждой точке изображения является либо вектор градиента яркости в этой точке, либо его норма. Оператор Собеля основан на свёртке изображения фильтрами в вертикальном и горизонтальном направлениях, поэтому его относительно легко вычислять.
+Оператор собеля использует ядра \(3×3\), с которыми сворачивают исходное изображение для вычисления приближенных значений производных по горизонтали и по вертикали. 
+Пусть A исходное изображение, а \(G_x\) и \(G_y\) — два изображения, где каждая точка содержит приближенные производные по \(x\) и по \(y\). Они вычисляются следующим образом:
+$$G_x = \\left[  \\begin{matrix}+1 & 0 & -1\\\\ +2 & 0 & -2\\\\ +1 & 0 & -1\\\\\\end{matrix}\\right] *A$$
+$$G_y = \\left[  \\begin{matrix}+1 & +2 & +1\\\\ 0 & 0 & 0\\\\ -1 & -2 & -1\\\\\\end{matrix}\\right] *A$$
+(\(*\) обозначает двумерную операцию свертки.)
+В каждой точке изображения приближенное значение величины градиента можно вычислить, используя полученные приближенные значения производных:
+$$G = \sqrt{G^{2}_x + G^{2}_y}$$
+''']
+    cursor.execute(sql, data)
+    con.commit()
+
+
 if __name__ == '__main__':
-    insert_sobel_script()
+    update_sobel_theory()
