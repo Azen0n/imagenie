@@ -451,7 +451,7 @@ hr {
 
 .last-modified-article .img-fluid {
     text-align: center;
-    margin-top: 1.5em;
+    margin: 1.5em 0;
     grid-column: 2;
     grid-row: 1;
 }
