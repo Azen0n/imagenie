@@ -22,10 +22,12 @@ class Visualizer {
 
         this.forwardBtn.addEventListener('click', () => {
             this.switchPixel(...this.nextPixel());
+            this.forwardBtn.classList.remove('pulse-btn');
         });
 
         this.backBtn.addEventListener('click', () => {
             this.switchPixel(...this.prevPixel());
+            this.forwardBtn.classList.remove('pulse-btn');
         });
     }
 
@@ -58,6 +60,7 @@ class Visualizer {
                 pixel.style.backgroundColor = this.RGBAsString(this.colors[i][j]);
                 pixel.addEventListener('click', () => {
                     this.switchPixel(i, j);
+                    this.forwardBtn.classList.remove('pulse-btn');
                 });
                 pixelGrid.appendChild(pixel);
                 pixels[i].push(pixel);
@@ -188,3 +191,8 @@ function mean(array) {
     let sum = array.reduce((sum, a) => sum + a, 0);
     return sum / array.length;
 }
+
+let forwardBtn = document.getElementById('forward');
+forwardBtn.addEventListener('click', () => {
+    forwardBtn.classList.remove('pulse-btn');
+});

@@ -2,24 +2,6 @@ class GaussianVisualizer extends Visualizer {
     constructor(size, image) {
         super(size, image);
         this.selectedPixelClass = 'small-selected-grid-element';
-        //this.kernel = [
-        //    ['1', '2', '1'],
-        //    ['2', '4', '2'],
-        //    ['1', '2', '1']
-        //];
-
-        // this.kernel = [
-        //     [0.0042074237114239, 0.05644980945147707, 0.0042074237114239],
-        //     [0.05644980945147707, 0.7573710673483963, 0.05644980945147707],
-        //     [0.0042074237114239, 0.05644980945147707, 0.0042074237114239]
-        // ];
-
-        //this.kernel = [
-        //    ['∙', '•', '∙'],
-        //    ['•', '⬤', '•'],
-        //    ['∙', '•', '∙']
-        //];
-//
         this.sigma = 1;
         this.kernel = this.calcKernel(this.sigma);
 
@@ -29,6 +11,7 @@ class GaussianVisualizer extends Visualizer {
         setTimeout(() => {
             this.togglePixel(this.row, this.column);
             this.toggleProcessedPixel(this.row, this.column);
+            this.switchPixel(this.row, this.column);
             this.switchPixel(this.row, this.column);
         }, 100);
     }
@@ -129,12 +112,6 @@ class GaussianVisualizer extends Visualizer {
         }
     }
 
-    formula(sigma, x, y) {
-        console.log(x + ' ' + y);
-        //return Math.E ** -((x * x + y * y) / (2 * sigma ** 2)) / ((2 * Math.PI) ** 0.5 * sigma ** 2)
-        return 1;//Math.pow(Math.E,-((x * x + y * y) / (2 * sigma ** 2))) / (Math.pow(2 * Math.PI,1/2) * Math.pow(sigma ,1/2))
-    }
-
     updateInstructions() {
         let instructions = document.getElementById('instructions');
         instructions.innerHTML = '';
@@ -148,11 +125,6 @@ class GaussianVisualizer extends Visualizer {
                     pixels.push([[i_, j_], this.colors[i_][j_]]);
                 }
             }
-        }
-
-        for (let pixel of pixels) {
-            let gaussian = this.formula(1 / 3, pixel[0][0] - 1, pixel[0][1] - 1);
-            console.log(`R: ${pixel[1][0]} G: ${pixel[1][1]} B: ${pixel[1][2]} | gaussian: ${gaussian}`);
         }
 
         let brightnesses = [];
@@ -231,10 +203,8 @@ class GaussianVisualizer extends Visualizer {
         setTimeout(() => {
             for (let i = 0; i < 2; ++i) {
                 let btn = document.getElementById(`btn${i + 1}`);
-                console.log(btn);
 
                 btn.addEventListener('click', () => {
-                    console.log('1111111111111111111111111111111111111111111111')
                     let formulas = document.getElementById(`formulas${i + 1}`);
                     if (formulas.classList.contains('invisible-formulas')) {
                         formulas.classList.replace('invisible-formulas', 'visible-formulas');
@@ -243,7 +213,7 @@ class GaussianVisualizer extends Visualizer {
                     }
                 });
             }
-        }, 500)
+        }, 500);
 
         let instruction =
             `<div class="instruction-number">${3}</div>` +
@@ -263,4 +233,3 @@ let image = new Image();
 image.src = '../static/img/visualization-pixels.png';
 
 const visualizer = new GaussianVisualizer(5, image);
-

@@ -1,4 +1,5 @@
 import json
+import re
 
 import cv2
 import numpy as np
@@ -15,12 +16,23 @@ from .models import Article, Script, Code, Parameter, FurtherReading, Test, Ques
 def index(request):
     articles = Article.objects.all()
     last_modified_article = Article.objects.order_by('-modified_at').first()
-
+    short_theory = trim_theory(last_modified_article.theory)
     context = {
         'articles': articles,
         'last_modified_article': last_modified_article,
+        'short_theory': short_theory,
     }
     return render(request, 'index.html', context)
+
+
+def trim_theory(theory: str) -> str:
+    period_indices = [i for i, char in enumerate(theory) if char == '.']
+    # Сокращаем количество коротких "предложений" (скорее всего это формулы, раз точки так близко друг к другу)
+    # до тех пор, пока не останутся достаточно длинные предложения
+    min_index, max_index = 3, 5
+    while period_indices[max_index + 1] - period_indices[max_index] < 5 and max_index > min_index:
+        max_index -= 1
+    return theory[:period_indices[max_index] + 1]
 
 
 def algorithm(request, id: int):

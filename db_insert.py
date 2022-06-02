@@ -322,5 +322,140 @@ def insert_test_stuff():
     insert_answers()
 
 
+def insert_sobel_article():
+    con = sqlite3.connect('db.sqlite3')
+    cursor = con.cursor()
+    sql = '''insert into base_article(title, lower_en_title, theory, theory_source, image_before, image_after, created_at, modified_at)
+                 values (?, ?, ?, ?, '', '', datetime('now'), datetime('now'))'''
+    data = ['Оператор Собеля', 'sobel',
+            '''Оператор Собеля используется в области обработки изображений. Часто его применяют в алгоритмах выделения границ. По сути, это дискретный дифференциальный оператор, вычисляющий приближенное значение градиента яркости изображения. Результатом применения оператора Собеля в каждой точке изображения является либо вектор градиента яркости в этой точке, либо его норма. Оператор Собеля основан на свёртке изображения фильтрами в вертикальном и горизонтальном направлениях, поэтому его относительно легко вычислять.
+Оператор собеля использует ядра \(3×3\), с которыми сворачивают исходное изображение для вычисления приближенных значений производных по горизонтали и по вертикали. 
+Пусть A исходное изображение, а \(G_x\) и \(G_y\) — два изображения, где каждая точка содержит приближенные производные по \(x\) и по \(y\). Они вычисляются следующим образом:
+$$G_y = \\left[  \\begin{matrix}-1 & -2 & -1\\\\ 0 & 0 & 0\\\\ +1 & +2 & +1\\\\\\end{matrix}\\right] *A$$
+$$G_y = \\left[  \\begin{matrix}-1 & -2 & -1\\\\ 0 & 0 & 0\\\\ +1 & +2 & +1\\\\\\end{matrix}\\right] *A$$
+(\(*\) обозначает двумерную операцию свертки.)
+В каждой точке изображения приближенное значение величины градиента можно вычислить, используя полученные приближенные значения производных:
+$$G = \sqrt{G^{2}_x + G^{2}_y}$$
+''', 'https://ru.wikipedia.org/wiki/%D0%9E%D0%BF%D0%B5%D1%80%D0%B0%D1%82%D0%BE%D1%80_%D0%A1%D0%BE%D0%B1%D0%B5%D0%BB%D1%8F']
+    cursor.execute(sql, data)
+    con.commit()
+
+
+def insert_sobel_code():
+    con = sqlite3.connect('db.sqlite3')
+    cursor = con.cursor()
+    sql = '''insert into base_code(language, language_class, implementation, article_id)
+                     values (?, ?, ?, ?)'''
+    data = [('C#', 'language-csharp', '''using System;
+using System.Drawing;
+
+private Bitmap sobel(Bitmap image)
+{
+    Bitmap newImage = new Bitmap(image.Width, image.Height);
+    int[,] kernel_dx = new int[3, 3]
+    {
+        {-1, 0, 1},
+        {-2, 0, 2},
+        {-1, 0, 1}
+    };
+    int[,] kernel_dy = new int[3, 3]
+    {
+        {-1, -2, -1},
+        {0, 0, 0},
+        {1, 2, 1}
+    };
+    for (int y = 1; y < image.Height-1; y++)
+    {
+        for (int x = 1; x < image.Width-1; x++)
+        {
+            double gx = 0;
+            double gy = 0;
+            double brightness;
+            for (int i = -1; i <= 1; i++)
+            {
+                for (int j = -1; j <= 1; j++)
+                {
+                    var pixel = image.GetPixel(x+i, y+j);
+                    brightness = (0.299 * pixel.R + 0.587 * pixel.G + 0.114 * pixel.B);
+                    gx += brightness * kernel_dx[i + 1,j + 1];
+                    gy += brightness * kernel_dy[i + 1,j + 1];
+                }
+            }
+            double g = Math.Sqrt(Math.Pow(gx, 2) + Math.Pow(gy, 2))>255?255 : Math.Sqrt(Math.Pow(gx, 2) + Math.Pow(gy, 2));
+            newImage.SetPixel(x, y, Color.FromArgb((int)g, (int)g, (int)g));
+        }
+    }
+    return newImage;
+}''', 3),
+            ('python', 'language-python', '''def sobel(image: Image) -> Image:
+    image = image.convert('L')
+    kernel_dx = np.array([[-1, 0, 1],
+                          [-2, 0, 2],
+                          [-1, 0, 1]])
+    kernel_dy = np.array([[-1, -2, -1],
+                          [0, 0, 0],
+                          [1, 2, 1]])
+    kernel_size = 3
+    pixels = np.asarray(image).astype(int)
+    new_pixels = np.zeros((image.height, image.width))
+    for x in range(image.height - kernel_size + 1):
+        for y in range(1, image.width - kernel_size + 1):
+            kernel_pixels = pixels[x:x + kernel_size, y:y + kernel_size]
+            new_pixels[x + 1, y + 1] = int(
+                ((np.sum(kernel_dx * kernel_pixels)) ** 2 + (np.sum(kernel_dy * kernel_pixels)) ** 2) ** 0.5)
+    new_image = Image.fromarray(np.uint8(new_pixels), 'L')
+
+    return new_image''', 3)]
+    cursor.executemany(sql, data)
+    con.commit()
+
+
+def insert_sobel_script():
+    con = sqlite3.connect('db.sqlite3')
+    cursor = con.cursor()
+    sql = '''insert into base_script(path, article_id)
+                             values (?, ?)'''
+    data = ['../static/js/sobel-visualization.js', 3]
+    cursor.execute(sql, data)
+    con.commit()
+
+
+def insert_sobel_further_reading():
+    con = sqlite3.connect('db.sqlite3')
+    cursor = con.cursor()
+    sql = '''insert into base_furtherreading(name, language, image, article_id)
+                         values (?, ?, ?, ?)'''
+    data = ['''Визильтер Ю.В., Желтов С.Ю., Бондаренко А.В., Осоков М.В., Моржин А.В. Обработка и анализ изображений в задачах машинного зрения: Курс лекций и практических занятий. М. : Физматкнига, 2010. – с. 152–161''',
+            'RU', '../static/img/flags/ru.svg', 3]
+    cursor.execute(sql, data)
+    con.commit()
+
+
+def update_sobel_images():
+    con = sqlite3.connect('db.sqlite3')
+    cursor = con.cursor()
+    sql = '''update base_article set image_before = ?, image_after = ? where id = 3'''
+    data = ['../static/img/original.png', '../static/img/sobel.png']
+    cursor.execute(sql, data)
+    con.commit()
+
+
+def update_sobel_theory():
+    con = sqlite3.connect('db.sqlite3')
+    cursor = con.cursor()
+    sql = '''update base_article set theory = ? where id = 3'''
+    data = ['''Оператор Собеля используется в области обработки изображений. Часто его применяют в алгоритмах выделения границ. По сути, это дискретный дифференциальный оператор, вычисляющий приближенное значение градиента яркости изображения. Результатом применения оператора Собеля в каждой точке изображения является либо вектор градиента яркости в этой точке, либо его норма. Оператор Собеля основан на свёртке изображения фильтрами в вертикальном и горизонтальном направлениях, поэтому его относительно легко вычислять.
+Оператор собеля использует ядра \(3×3\), с которыми сворачивают исходное изображение для вычисления приближенных значений производных по горизонтали и по вертикали. 
+Пусть A исходное изображение, а \(G_x\) и \(G_y\) — два изображения, где каждая точка содержит приближенные производные по \(x\) и по \(y\). Они вычисляются следующим образом:
+$$G_x = \\left[  \\begin{matrix}+1 & 0 & -1\\\\ +2 & 0 & -2\\\\ +1 & 0 & -1\\\\\\end{matrix}\\right] *A$$
+$$G_y = \\left[  \\begin{matrix}+1 & +2 & +1\\\\ 0 & 0 & 0\\\\ -1 & -2 & -1\\\\\\end{matrix}\\right] *A$$
+(\(*\) обозначает двумерную операцию свертки.)
+В каждой точке изображения приближенное значение величины градиента можно вычислить, используя полученные приближенные значения производных:
+$$G = \sqrt{G^{2}_x + G^{2}_y}$$
+''']
+    cursor.execute(sql, data)
+    con.commit()
+
+
 if __name__ == '__main__':
-    insert_test_stuff()
+    update_sobel_theory()
