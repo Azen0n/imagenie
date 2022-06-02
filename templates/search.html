@@ -10,25 +10,8 @@
     <div class="row bg-gray">
         <div class="col-3"></div>
         <div class="col-6">
-            <div class="plate mt-5">
-                <div class="title">Последняя обновленная статья — {{ last_modified_article.title }}</div>
-            </div>
-            <div class="plate">
-                <div class="last-modified-article">
-                    <div class="description">
-                        {{ short_theory }}
-                        <div class="text-end">
-                            <a class="description-source"
-                               href="articles/{{ last_modified_article.id }}">Подробнее</a>
-                        </div>
-                    </div>
-                    <img class="img-fluid image" src="{% static last_modified_article.image_after %}" alt="Processed image">
-                </div>
-            </div>
-
-
             <div class="plate mt-3">
-                <div class="title">Алгоритмы</div>
+                <div class="title">Результаты поиска по запросу "{{ key }}"</div>
             </div>
 
             <div>
@@ -39,6 +22,7 @@
                     </span>
                         <a class="entry-element entry-text text-decoration-none text-black"
                            href="articles/{{ article.id }}">{{ article.title }}</a>
+                        <span class="tag">тег</span>
                     </div>
                 {% endfor %}
             </div>

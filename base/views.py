@@ -4,6 +4,7 @@ import re
 import cv2
 import numpy as np
 from django.db.models import Count
+from django.db.models import Q
 from django.http import JsonResponse
 from django.shortcuts import render
 
@@ -95,3 +96,9 @@ def get_test_results(request, article_id: int, test_id: int):
 
     context = {'correct_answers': correct_answers}
     return JsonResponse(context)
+
+
+def search_results(request):
+    key = request.GET['key']
+    articles = Article.objects.filter(Q(title__icontains=key) | Q(lower_en_title__icontains=key) | Q(theory__icontains=key))
+    return render(request, 'search.html', { 'articles': articles, 'key': key })
