@@ -261,11 +261,9 @@ def insert_test():
     cursor = con.cursor()
     sql = '''insert into base_test(title, description, article_id, created_at, modified_at)
     values (?, ?, ?, datetime('now'), datetime('now'))'''
-    data = ['Пробный тест', '''Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus tempus ac quam id 
-    posuere. Nunc ut laoreet leo, et posuere orci. Donec porttitor est nunc, sit amet efficitur massa imperdiet a. 
-    Mauris leo risus, pulvinar congue laoreet aliquet, fermentum a lorem. Mauris eget tincidunt nunc, eu scelerisque 
-    nisi.''', 1]
-    cursor.execute(sql, data)
+    data = [('Тест по теории', '''Простые вопросы на знание теоретического материала.''', 1),
+            ('Тест по теории', '''Простые вопросы на знание теоретического материала.''', 2)]
+    cursor.executemany(sql, data)
     con.commit()
 
 
@@ -274,9 +272,13 @@ def insert_questions():
     cursor = con.cursor()
     sql = '''insert into base_question(text, test_id) values (?, ?)'''
     data = [
-        ('Великобритания состоит из следующих стран: Англия, Северная Ирландия, Уэльс и…', 1),
-        ('Как называется семейная стая львов?', 1),
-        ('Как звали женщину из греческой мифологии, у которой вместо волос были змеи?', 1)
+        ('Выберите верное суждение о пороге в глобальной бинаризации', 1),
+        ('Главная цель бинаризации', 1),
+        ('''Верны ли следующие суждения о фильтре Гаусса?
+         А. Применение фильтра Гаусса увеличивает шум изображения Б. Применение фильтра Гаусса снижает детализацию изображения''', 2),
+        ('Как определяют радиус фильтра r через сигму σ?', 2),
+        ('Как зависит степень размытия изображения с увеличением сигмы σ?', 2),
+        ('Если использовать двумерные значения функции Гаусса как квадратную свертку, то какое влияние будет оказывать пиксель, расположенный в центре?', 2),
     ]
     cursor.executemany(sql, data)
     con.commit()
@@ -287,20 +289,35 @@ def insert_answers():
     cursor = con.cursor()
     sql = '''insert into base_answer(text, question_id, is_correct) values (?, ?, ?)'''
     data = [
-        ('Франция', 1, False),
-        ('Венгрия', 1, False),
-        ('Шотландия', 1, True),
-        ('Австрия', 1, False),
+        ('верно только А', 3, False),
+        ('верно только Б', 3, True),
+        ('верны оба суждения', 3, False),
+        ('оба суждения неверны', 3, False),
 
-        ('Отряд', 2, False),
-        ('Пакет', 2, False),
-        ('Стадо', 2, False),
-        ('Прайд', 2, True),
+        ('r = 2σ', 4, False),
+        ('r = σ/3', 4, False),
+        ('r = 3σ', 4, True),
+        ('r = σ', 4, False),
 
-        ('Пандора', 3, False),
-        ('Елена', 3, False),
-        ('Кассиопея', 3, False),
-        ('Медуза', 3, True),
+        ('размытие прямо пропорционально значению сигмы', 5, True),
+        ('размытие прямо пропорционально квадрату значения сигмы', 5, False),
+        ('размытие обратно пропорционально значению сигмы', 5, False),
+        ('размытие обратно пропорционально квадрату значения сигмы', 5, False),
+
+        ('минимальное', 6, False),
+        ('максимальное', 6, True),
+        ('случайное', 6, False),
+        ('влияние не зависит от расположения', 6, False),
+
+        ('порог остается неизменной в течение всего процесса бинаризации', 1, True),
+        ('порог вычисляется для каждой зоны изображения отдельно', 1, False),
+        ('порог зависит от яркости изображения', 1, False),
+        ('порог определяется случайным образом', 1, False),
+
+        ('выделение светлых участков', 2, False),
+        ('поглощение обнаруженных шумов', 2, False),
+        ('радикальное уменьшение количества информации', 2, True),
+        ('перевод изображение в двоичную последовательность', 2, False),
     ]
     cursor.executemany(sql, data)
     con.commit()
@@ -458,4 +475,6 @@ $$G = \sqrt{G^{2}_x + G^{2}_y}$$
 
 
 if __name__ == '__main__':
-    update_sobel_theory()
+    insert_test()
+    insert_questions()
+    insert_answers()

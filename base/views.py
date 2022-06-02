@@ -1,5 +1,4 @@
 import json
-import re
 
 import cv2
 import numpy as np
@@ -67,7 +66,7 @@ def process_image(request):
 
 
 def tests(request, id: int):
-    number_of_questions = Question.objects.all().values('test_id').annotate(total=Count('test_id'))
+    number_of_questions = Question.objects.filter(test_id=id).values('test_id').annotate(total=Count('test_id'))
 
     context = {
         'tests': zip(Test.objects.filter(article_id=id), number_of_questions),
@@ -100,5 +99,6 @@ def get_test_results(request, article_id: int, test_id: int):
 
 def search_results(request):
     key = request.GET['key']
-    articles = Article.objects.filter(Q(title__icontains=key) | Q(lower_en_title__icontains=key) | Q(theory__icontains=key))
-    return render(request, 'search.html', { 'articles': articles, 'key': key })
+    articles = Article.objects.filter(
+        Q(title__icontains=key) | Q(lower_en_title__icontains=key) | Q(theory__icontains=key))
+    return render(request, 'search.html', {'articles': articles, 'key': key})
